@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.WebApplication.Entities
 {
-    public class ContactUs : BaseEntity
+    public class Contact : BaseEntity
     {
         public string Location { get; set; } = null!;
         public string Email { get; set; } = null!;

@@ -15,6 +15,6 @@ namespace EntityLayer.WebApplication.Entities
         public string? Instagram { get; set; }
 
 
-        public AboutUs AboutUs { get; set; } = null!; // Nav Prop
+        public About AboutUs { get; set; } = null!; // Nav Prop
     }
 }

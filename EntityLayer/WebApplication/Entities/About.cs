@@ -2,7 +2,7 @@
 
 namespace EntityLayer.WebApplication.Entities
 {
-    public class AboutUs : BaseEntity
+    public class About : BaseEntity
     {
         public string Header { get; set; } = null!;
         public string Description { get; set; } = null!;
