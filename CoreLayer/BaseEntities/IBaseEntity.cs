@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace CoreLayer.BaseEntities
 {
+    // Why we created this interface?
     public interface IBaseEntity
     {
     }

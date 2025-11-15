@@ -10,8 +10,8 @@ namespace CoreLayer.BaseEntities
     {
         // virtual: allows derived classes to override and change this property's behavior.
         public virtual int Id { get; set; } // EFCore Assign this Id to all Entities as a Primary Key
-        public virtual string CreatedAt { get; set; } = DateTime.Now.ToString("d");
-        public virtual string? UpdatedAt { get; set; }
+        public virtual string CreatedDate { get; set; } = DateTime.Now.ToString("d");
+        public virtual string? UpdatedDate { get; set; }
 
         // Ensures no two users update the same record with old data.
         // EF checks this value(RowVersion), and if it changed => throws DbUpdateConcurrencyException.

@@ -13,7 +13,6 @@
 
 
 	<ItemGroup>
-	  <Folder Include="Configuration\" />
 	  <Folder Include="Extensions\" />
 	  <Folder Include="Repositories\" />
 	  <Folder Include="UnitOfWork\" />
