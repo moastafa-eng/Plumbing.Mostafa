@@ -13,6 +13,17 @@ namespace RepositoryLayer.Configuration
             builder.Property(x => x.RowVersion).IsRowVersion(); // Auto updated in DB
 
             builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
+
+            // Data Seed
+            builder.HasData(new Category
+            {
+                Id = 1,
+                Name = "Projects"
+            }, new Category
+            {
+                Id = 2,
+                Name = "SitWorks"
+            });
         }
     }
 }

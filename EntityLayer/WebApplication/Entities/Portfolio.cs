@@ -9,6 +9,6 @@ namespace EntityLayer.WebApplication.Entities
         public string FileType { get; set; } = null!;
 
         public int CategoryId { get; set; } // Foreign Key
-        public Contact Category { get; set; } = null!; // Nav Prop
+        public Category Category { get; set; } = null!; // Nav Prop
     }
 }

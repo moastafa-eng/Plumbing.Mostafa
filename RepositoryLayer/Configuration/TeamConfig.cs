@@ -16,6 +16,18 @@ namespace RepositoryLayer.Configuration
             builder.Property(x => x.Title).IsRequired().HasMaxLength(200);
             builder.Property(x => x.FileName).IsRequired();
             builder.Property(x => x.FileType).IsRequired();
+
+            // Data Seed
+            builder.HasData(new Team
+            {
+                Id = 1,
+                FullName = "Plumbing Team",
+                Title = "Skilled Plumbers You Can Trust",
+                FileType = "Test",
+                FileName = "Test",
+                Facebook = "FaceBook",
+                Instagram = "Instagram",
+            });
         }
     }
 }

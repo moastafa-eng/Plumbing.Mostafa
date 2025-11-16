@@ -15,6 +15,41 @@ namespace RepositoryLayer.Configuration
             builder.Property(x => x.Title).IsRequired().HasMaxLength(200);
             builder.Property(x => x.FileName).IsRequired();
             builder.Property(x => x.FileType).IsRequired();
+
+            // Data Seed
+            builder.HasData(new Portfolio
+            {
+                Id = 1,
+                Title = "Test Picture",
+                FileName = "Test",
+                FileType = "Test",
+                CategoryId = 1,
+
+            }, new Portfolio
+            {
+                Id = 2,
+                Title = "Test Picture2",
+                FileName = "Test2",
+                FileType = "Test2",
+                CategoryId = 1,
+
+            }, new Portfolio
+            {
+                Id = 3,
+                Title = "Test Picture3",
+                FileName = "Test3",
+                FileType = "Test3",
+                CategoryId = 2,
+
+            }, new Portfolio
+            {
+                Id = 4,
+                Title = "Test Picture4",
+                FileName = "Test4",
+                FileType = "Test4",
+                CategoryId = 2,
+
+            });
         }
     }
 }

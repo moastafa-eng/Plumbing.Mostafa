@@ -18,6 +18,24 @@ namespace RepositoryLayer.Configuration
             builder.Property(x => x.HourOfSupport).IsRequired().HasMaxLength(5);
             builder.Property(x => x.HardWorkers).IsRequired().HasMaxLength(5);
             builder.Property(x => x.Clients).IsRequired().HasMaxLength(5);
+
+            // Data Seed
+            builder.HasData(new About
+            {
+                Id = 1,
+                Header = "Professional Plumbing Solutions You Can Trust",
+                Description = "We are a trusted plumbing company offering reliable installation," +
+                " maintenance, and repair services." +
+                " Our experienced team is dedicated to delivering quality workmanship, timely service," +
+                " and complete customer satisfaction for every project we handle.",
+                Clients = 5,
+                Projects = 5,
+                HourOfSupport = 150,
+                HardWorkers = 3,
+                FileName = "Test",
+                FileType = "Test",
+                SocialMediaId = 1,
+            });
         }
     }
 }

@@ -17,6 +17,36 @@ namespace RepositoryLayer.Configuration
             builder.Property(x => x.FileName).IsRequired();
             builder.Property(x => x.FileType).IsRequired();
             builder.Property(x => x.Comment).IsRequired().HasMaxLength(2000);
+
+            // Data Seed
+            builder.HasData(new Testimonial 
+            {
+                Id = 1,
+                FullName = "Testimonial Name1",
+                Title = "Trusted Testimonial1",
+                FileName = "Test",
+                FileType = "Test",
+                Comment = "the best testimonial at all",
+                
+            }, new Testimonial
+            {
+                Id = 2,
+                FullName = "Testimonial Name2",
+                Title = "Trusted Testimonial2",
+                FileName = "Test",
+                FileType = "Test",
+                Comment = "the best testimonial at all",
+
+            }, new Testimonial
+            {
+                Id = 3,
+                FullName = "Testimonial Name3",
+                Title = "Trusted Testimonial3",
+                FileName = "Test",
+                FileType = "Test",
+                Comment = "the best testimonial at all",
+
+            });
         }
     }
 }

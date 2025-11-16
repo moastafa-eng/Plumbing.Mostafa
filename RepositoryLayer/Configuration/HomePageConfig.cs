@@ -15,6 +15,17 @@ namespace RepositoryLayer.Configuration
             builder.Property(x => x.Header).IsRequired().HasMaxLength(200);
             builder.Property(x => x.Description).IsRequired().HasMaxLength(2000);
             builder.Property(x => x.VideoLink).IsRequired(); // => Link
+
+            // Data Seed
+            builder.HasData(new HomePage
+            {
+                Id = 1,
+                Header = "Professional Plumbing Services You Can Rely On",
+                Description = "We provide high-quality plumbing solutions for homes and businesses." +
+                " Our expert team handles everything from leak repairs and drain cleaning to complete system " +
+                "installations — always with honesty, speed, and exceptional care.",
+                VideoLink = "Test Video Link"
+            });
         }
     }
 }
