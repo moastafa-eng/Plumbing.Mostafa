@@ -1,3 +1,5 @@
+using RepositoryLayer.Extensions;
+
 namespace Plumbing.Mostafa.PL
 {
     public class Program
@@ -8,6 +10,8 @@ namespace Plumbing.Mostafa.PL
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.LoadRepositoryLayerExtensions(builder.Configuration);
+                
 
             var app = builder.Build();
 
