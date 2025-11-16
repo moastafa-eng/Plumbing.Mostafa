@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace RepositoryLayer.Context
 {
-    internal class AppDbContext : DbContext
+    public class AppDbContext : DbContext
     {
         #region Constructors
 		
