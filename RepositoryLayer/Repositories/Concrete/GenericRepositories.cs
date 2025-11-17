@@ -68,5 +68,6 @@ namespace RepositoryLayer.Repositories.Concrete
         {
             return await _dbSet.FindAsync(id);
         }
+
     }
 }

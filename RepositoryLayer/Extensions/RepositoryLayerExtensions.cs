@@ -2,6 +2,10 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RepositoryLayer.Context;
+using RepositoryLayer.Repositories.Abstract;
+using RepositoryLayer.Repositories.Concrete;
+using RepositoryLayer.UnitOfWorks.Abstract;
+using RepositoryLayer.UnitOfWorks.Concrete;
 
 namespace RepositoryLayer.Extensions
 {
@@ -23,6 +27,10 @@ namespace RepositoryLayer.Extensions
         public static IServiceCollection LoadRepositoryLayerExtensions(this IServiceCollection services, IConfiguration config)
         {
             services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(config.GetConnectionString("SqlConnection")));
+            services.AddScoped(typeof(IGenericRepositories<>), typeof(GenericRepositories<>)); // Open generic type
+
+            // we don't use type of here because IUnitOfWork is a static interface and class UnitOfWork is static
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
 
