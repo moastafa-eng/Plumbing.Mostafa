@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.WebApplication.ViewModels.CategoryViewModels
 {
-    internal class CategoryListVM
+    public class CategoryListVM
     {
     }
 }

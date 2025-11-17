@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.WebApplication.ViewModels.ContactViewModels
 {
-    internal class ContactAddVM
+    public class ContactAddVM
     {
     }
 }

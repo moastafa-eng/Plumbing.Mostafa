@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using EntityLayer.WebApplication.Entities;
+using EntityLayer.WebApplication.ViewModels.HomePageViewModels;
 
 namespace ServiceLayer.AutoMapper
 {
-    internal class HomePageMapper
+    public class HomePageMapper : Profile
     {
+        public HomePageMapper()
+        {
+            CreateMap<HomePage, HomePageListVM>().ReverseMap();
+            CreateMap<HomePage, HomePageAddVM>().ReverseMap();
+            CreateMap<HomePage, HomePageUpdateVM>().ReverseMap();
+        }
     }
 }

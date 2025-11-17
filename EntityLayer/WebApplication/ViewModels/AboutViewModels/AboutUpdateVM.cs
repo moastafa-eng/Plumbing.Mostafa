@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.WebApplication.ViewModels.AboutViewModels
 {
-    internal class AboutUpdateVM
+    public class AboutUpdateVM
     {
     }
 }

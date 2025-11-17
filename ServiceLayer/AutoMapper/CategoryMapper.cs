@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using EntityLayer.WebApplication.Entities;
+using EntityLayer.WebApplication.ViewModels.CategoryViewModels;
 
 namespace ServiceLayer.AutoMapper
 {
-    internal class CategoryMapper
+    public class CategoryMapper : Profile
     {
+        public CategoryMapper()
+        {
+            CreateMap<Category, CategoryListVM>().ReverseMap();
+            CreateMap<Category, CategoryAddVM>().ReverseMap();
+            CreateMap<Category, CategoryUpdateVM>().ReverseMap();
+        }
     }
 }

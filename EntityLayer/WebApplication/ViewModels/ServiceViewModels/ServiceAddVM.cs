@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.WebApplication.ViewModels.ServiceViewModels
 {
-    internal class ServiceAddVM
+    public class ServiceAddVM
     {
     }
 }

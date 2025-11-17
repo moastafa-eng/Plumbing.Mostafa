@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.WebApplication.ViewModels.TeamViewModels
 {
-    internal class TeamAddVM
+    public class TeamAddVM
     {
     }
 }

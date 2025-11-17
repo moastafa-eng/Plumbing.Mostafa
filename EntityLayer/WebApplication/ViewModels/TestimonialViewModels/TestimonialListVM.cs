@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.WebApplication.ViewModels.TestimonialViewModels
 {
-    internal class TestimonialListVM
+    public class TestimonialListVM
     {
     }
 }

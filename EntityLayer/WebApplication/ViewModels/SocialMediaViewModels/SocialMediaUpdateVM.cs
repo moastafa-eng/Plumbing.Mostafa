@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.WebApplication.ViewModels.SocialMediaViewModels
 {
-    internal class SocialMediaUpdateVM
+    public class SocialMediaUpdateVM
     {
     }
 }

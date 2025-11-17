@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using EntityLayer.WebApplication.Entities;
+using EntityLayer.WebApplication.ViewModels.ContactViewModels;
 
 namespace ServiceLayer.AutoMapper
 {
-    internal class ContactMapper
+    public class ContactMapper : Profile
     {
+        public ContactMapper()
+        {
+            CreateMap<Contact, ContactListVM>().ReverseMap();
+            CreateMap<Contact, ContactAddVM>().ReverseMap();
+            CreateMap<Contact, ContactUpdateVM>().ReverseMap();
+        }
     }
 }

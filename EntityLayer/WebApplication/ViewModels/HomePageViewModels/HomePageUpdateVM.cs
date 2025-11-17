@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.WebApplication.ViewModels.HomePageViewModels
 {
-    internal class HomePageUpdateVM
+    public class HomePageUpdateVM
     {
     }
 }

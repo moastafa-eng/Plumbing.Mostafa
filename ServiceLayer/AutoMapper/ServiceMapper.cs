@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AutoMapper;
+using EntityLayer.WebApplication.Entities;
+using EntityLayer.WebApplication.ViewModels.ServiceViewModels;
 
 namespace ServiceLayer.AutoMapper
 {
-    internal class ServiceMapper
+    public class ServiceMapper : Profile
     {
+        public ServiceMapper()
+        {
+            CreateMap<Service, ServiceListVM>().ReverseMap();
+            CreateMap<Service, ServiceAddVM>().ReverseMap();
+            CreateMap<Service, ServiceUpdateVM>().ReverseMap();
+        }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.WebApplication.ViewModels.PortfolioViewModels
 {
-    internal class PortfolioListVM
+    public class PortfolioListVM
     {
     }
 }
