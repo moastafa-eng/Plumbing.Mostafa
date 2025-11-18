@@ -12,7 +12,7 @@ namespace Plumbing.Mostafa.PL
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            builder.Services.LoadRepositoryLayerExtensions(builder.Configuration); // Load all Repository Services
+            builder.Services.LoadRepositoryLayerExtensions(builder.Configuration); // Load all Repository Services.
             builder.Services.LoadServiceLayerExtensions(); // Load all Service Services.
                 
 
