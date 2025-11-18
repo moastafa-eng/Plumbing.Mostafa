@@ -1,12 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EntityLayer.WebApplication.ViewModels.SocialMediaViewModels;
 
 namespace EntityLayer.WebApplication.ViewModels.AboutViewModels
 {
     public class AboutUpdateVM
     {
+        public virtual int Id { get; set; }
+        public virtual string? UpdatedDate { get; set; }
+        public virtual byte[] RowVersion { get; set; } = null!;
+
+        public string Header { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public int Clients { get; set; }
+        public int Projects { get; set; }
+        public int HourOfSupport { get; set; }
+        public int HardWorkers { get; set; }
+        public string FileType { get; set; } = null!;
+        public string FileName { get; set; } = null!;
+
+
+        public int SocialMediaId { get; set; }
+        public SocialMediaUpdateVM SocialMedia { get; set; } = null!;
     }
 }

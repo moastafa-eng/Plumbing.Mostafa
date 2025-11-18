@@ -46,6 +46,7 @@ namespace RepositoryLayer.UnitOfWorks.Concrete
 
         IGenericRepositories<T> IUnitOfWork.GetGenericRepository<T>()
         {
+            // Get Obj from GenericRepository
             return _serviceProvider.GetRequiredService<IGenericRepositories<T>>();
 
         }
