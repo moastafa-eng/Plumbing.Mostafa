@@ -9,12 +9,10 @@ namespace RepositoryLayer.UnitOfWorks.Concrete
     public class UnitOfWork: IUnitOfWork
     {
         private readonly AppDbContext _context;
-        private readonly IServiceProvider _serviceProvider;
 
-        public UnitOfWork(AppDbContext context, IServiceProvider serviceProvider)
+        public UnitOfWork(AppDbContext context)
         {
             _context = context;
-            _serviceProvider = serviceProvider;
         }
 
         #region Why we use SaveChangesAsync here ?
@@ -47,7 +45,7 @@ namespace RepositoryLayer.UnitOfWorks.Concrete
         IGenericRepositories<T> IUnitOfWork.GetGenericRepository<T>()
         {
             // Get Obj from GenericRepository
-            return _serviceProvider.GetRequiredService<IGenericRepositories<T>>();
+            return new GenericRepositories<T>(_context);
 
         }
     }
