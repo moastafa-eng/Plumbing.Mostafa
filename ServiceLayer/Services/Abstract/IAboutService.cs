@@ -8,6 +8,6 @@ namespace ServiceLayer.Services.Abstract
         Task AddAboutAsync(AboutAddVM request);
         Task DeleteAboutAsync(int id);
         Task<AboutUpdateVM> GetAboutByIdAsync(int id);
-        Task UpdateAboutAsync(AboutUpdateVM request, int id);
+        Task UpdateAboutAsync(AboutUpdateVM request);
     }
 }

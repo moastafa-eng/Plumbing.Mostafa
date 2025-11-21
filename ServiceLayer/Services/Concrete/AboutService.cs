@@ -67,7 +67,7 @@ namespace ServiceLayer.Services.Concrete
             return about;
         }
 
-        public async Task UpdateAboutAsync(AboutUpdateVM request, int id)
+        public async Task UpdateAboutAsync(AboutUpdateVM request)
         {
             var about = _mapper.Map<About>(request);
 
