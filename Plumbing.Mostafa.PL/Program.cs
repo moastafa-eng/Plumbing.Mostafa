@@ -26,18 +26,31 @@ namespace Plumbing.Mostafa.PL
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseRouting();
+            #region Application middle ware's 
+            app.UseHttpsRedirection(); // Redirect to HTTPS
+            app.UseRouting(); // Prepare Routing
 
-            app.UseAuthorization();
+            app.UseAuthorization(); // Check Authorization 
 
-            app.MapStaticAssets();
-            app.MapControllerRoute(
+            app.MapStaticAssets(); // Enable static files
+
+#pragma warning disable ASP0014 // ignore the warning.
+            //Define the actual routes
+            app.UseEndpoints(endPoint =>
+            {
+                endPoint.MapAreaControllerRoute(
+                    name: "Admin",
+                    areaName: "Admin",
+                    pattern: "Admin/{controller=Dashboard}/{action=Index}/{id?}");
+
+                endPoint.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}")
                 .WithStaticAssets();
+            });
 
-            app.Run();
+            app.Run(); 
+            #endregion
         }
     }
 }
