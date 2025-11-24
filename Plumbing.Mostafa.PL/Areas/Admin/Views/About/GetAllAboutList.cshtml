@@ -10,7 +10,7 @@
 
 <nav>
 	<ol class="breadcrumb">
-		<li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+		<li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
 		<li class="breadcrumb-item active">About Us</li>
 	</ol>
 </nav>
@@ -124,4 +124,7 @@
 		</div>
 	</section>
 }
+
+<a asp-area="Admin" asp-controller="About" asp-action="AddAbout" class="btn btn-success btn-sm">Add About Us</a>
+
 
