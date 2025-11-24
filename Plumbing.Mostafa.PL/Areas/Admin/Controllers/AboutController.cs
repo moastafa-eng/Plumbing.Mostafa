@@ -4,6 +4,16 @@ using ServiceLayer.Services.Abstract;
 
 namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
 {
+    #region Why we use area here
+    // Admin Area: Used to organize all admin-related pages.
+    // Each Area contains its own Controllers, Views, and ViewModels
+    // to keep the project structure clean and modular.
+    //     /Admin/{controller}/{action}/{id?}
+    // Without this attribute, the controller will NOT be matched
+    // to the Admin Area even if it is inside the Admin folder.
+    #endregion
+
+    [Area("Admin")]
     public class AboutController : Controller
     {
         private readonly IAboutService _aboutService;
@@ -12,6 +22,8 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
         {
             _aboutService = aboutService;
         }
+
+
 
         public async Task<IActionResult> GetAllAboutList()
         {
@@ -31,7 +43,7 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
         {
             await _aboutService.AddAboutAsync(request); // Add new about to DB.
 
-            return RedirectToAction("GetAllAboutList", "AboutController", new { Area = ("Admin") }); // Action + Controller + Area Name
+            return RedirectToAction("GetAllAboutList", "About", new { Area = ("Admin") }); // Action + Controller + Area Name
         }
 
         [HttpGet]
@@ -47,15 +59,24 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
         {
             await _aboutService.UpdateAboutAsync(request);
 
-            return RedirectToAction("GetAllAboutList", "AboutController", new { Area = ("Admin") }); // Action + Controller + Area Name
+            return RedirectToAction("GetAllAboutList", "About", new { Area = ("Admin") }); // Action + Controller + Area Name
 
         }
 
-        public async Task<IActionResult> DeleteAbout(int id)
+        [HttpGet]
+        public IActionResult DeleteAbout([FromRoute]int id)
+        {
+            ViewBag.Id = id;
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteAboutConfirmed([FromForm] int id)
         {
             await _aboutService.DeleteAboutAsync(id);
 
-            return RedirectToAction("GetAllAboutList", "AboutController", new { Area = ("Admin") }); // Action + Controller + Area Name
+            return RedirectToAction("GetAllAboutList", "About", new { Area = ("Admin") }); // Action + Controller + Area Name
         }
     }
 }

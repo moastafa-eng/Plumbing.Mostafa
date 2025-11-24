@@ -34,19 +34,22 @@ namespace Plumbing.Mostafa.PL
 
             app.MapStaticAssets(); // Enable static files
 
-#pragma warning disable ASP0014 // ignore the warning.
-            //Define the actual routes
-            app.UseEndpoints(endPoint =>
+#pragma warning disable ASP0014 // Ignore The Warning
+            app.UseEndpoints(endpoint =>
             {
-                endPoint.MapAreaControllerRoute(
+                endpoint.MapAreaControllerRoute(
                     name: "Admin",
                     areaName: "Admin",
                     pattern: "Admin/{controller=Dashboard}/{action=Index}/{id?}");
 
-                endPoint.MapControllerRoute(
+                endpoint.MapAreaControllerRoute(
+                    name: "User",
+                    areaName: "User",
+                    pattern: "User/{controller=Dashboard}/{action=Index}/{id?}");
+
+                endpoint.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
-                .WithStaticAssets();
+                pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
             app.Run(); 
