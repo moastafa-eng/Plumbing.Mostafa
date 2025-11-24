@@ -1,4 +1,5 @@
 ﻿using EntityLayer.WebApplication.ViewModels.SocialMediaViewModels;
+using Microsoft.AspNetCore.Http;
 
 namespace EntityLayer.WebApplication.ViewModels.AboutViewModels
 {
@@ -17,6 +18,7 @@ namespace EntityLayer.WebApplication.ViewModels.AboutViewModels
         public string FileType { get; set; } = null!;
         public string FileName { get; set; } = null!;
 
+        public IFormFile Photo { get; set; } = null!;
 
         public int SocialMediaId { get; set; }
         public SocialMediaUpdateVM SocialMedia { get; set; } = null!;

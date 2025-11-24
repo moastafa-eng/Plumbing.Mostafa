@@ -1,6 +1,6 @@
-﻿@model AboutAddVM
+﻿@model AboutUpdateVM
 @{
-    ViewData["Title"] = "AddAbout";
+    ViewData["Title"] = "UpdateAbout";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -8,18 +8,20 @@
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
         <li class="breadcrumb-item"><a asp-area="Admin" asp-controller="About" asp-action="GetAllAboutList">About Us</a></li>
-        <li class="breadcrumb-item active">Add</li>
+        <li class="breadcrumb-item active">Update</li>
     </ol>
 </nav>
 
 <div class="card">
     <div class="card-body">
-        <h5 class="card-title">Add New About Us</h5>
+        <h5 class="card-title">Update About Us</h5>
 
         <!-- Add About Us Form -->
 
         @* enctype="multipart/form-data" → allows the form to send files (images, docs…) to the server. *@
-        <form asp-area="Admin" asp-controller="About" asp-action="AddAbout" method="post" class="row g-3" enctype="multipart/form-data"> 
+        <form asp-area="Admin" asp-controller="About" asp-action="UpdateAbout" method="post" class="row g-3" enctype="multipart/form-data"> 
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="RowVersion" />
             <input type="hidden" asp-for="FileName" value="test" />
             <input type="hidden" asp-for="FileType" value="test" />
             <div class="col-md-12"> 
@@ -64,9 +66,8 @@
                 </div>
             </div>
 
-
-            <partial name="AddSocialMediaParialView/_SocialMediaView" />
-
+    
+            <partial name="UpdateSocialMediaParialView/_SocialMediaView" />
 
             <div class="col-md-12">
                 <div class="form-floating">
