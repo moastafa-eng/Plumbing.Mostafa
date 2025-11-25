@@ -22,6 +22,8 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
             _categoryService = categoryService; // inject categoryService via constructor
         }
 
+
+
         public async Task<IActionResult> GetAllCategoryList()
         {
             var categoryList = await _categoryService.GetAllCategoryListAsync();

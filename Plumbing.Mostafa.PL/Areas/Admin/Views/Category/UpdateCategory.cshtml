@@ -28,9 +28,14 @@
                 </div>
             </div>
 
-            <div class="text-end">
-                <button type="submit" class="btn btn-primary">Submit</button>
-                <button type="reset" class="btn btn-secondary">Reset</button>
+            <div class="d-flex justify-content-between">
+
+                <a asp-area="Admin" asp-controller="Category" asp-action="GetAllCategoryList" class="btn btn-danger">Cancel</a>
+
+                <div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="reset" class="btn btn-secondary">Reset</button>
+                </div>
             </div>
         </form><!-- End Add About Us Form -->
 
