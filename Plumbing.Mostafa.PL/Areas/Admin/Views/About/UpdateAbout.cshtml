@@ -33,7 +33,7 @@
 
             <div class="col-md-12">
                 <div class="form-floating">
-                    <textarea asp-for="Description" type="text" class="form-control"  placeholder="Description"></textarea>
+                    <textarea asp-for="Description" class="form-control h-50" placeholder="Description" rows="3"></textarea>
                     <label asp-for="Description">Description</label>
                 </div>
             </div>
@@ -78,7 +78,7 @@
 
             <div class="d-flex justify-content-between">
 
-                <a asp-area="Admin" asp-controller="About" asp-action="GetAllAbouttList" class="btn btn-danger">Cancel</a>
+                <a asp-area="Admin" asp-controller="About" asp-action="GetAllAboutList" class="btn btn-danger">Cancel</a>
 
                 <div>
                     <button type="submit" class="btn btn-primary">Submit</button>

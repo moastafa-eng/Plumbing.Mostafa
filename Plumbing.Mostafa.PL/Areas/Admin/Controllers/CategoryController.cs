@@ -63,7 +63,7 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult DeleteCategory([FromRoute] int id)
+        public IActionResult DeleteCategory(int id)
         {
             ViewBag.Id = id;
 
@@ -71,7 +71,7 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteCategoryConfirmed([FromForm] int id)
+        public async Task<IActionResult> DeleteCategoryConfirmed(int id)
         {
             await _categoryService.DeleteCategoryAsync(id);
 

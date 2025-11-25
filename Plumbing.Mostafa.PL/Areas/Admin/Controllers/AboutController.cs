@@ -66,7 +66,7 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult DeleteAbout([FromRoute]int id)
+        public IActionResult DeleteAbout(int id)
         {
             ViewBag.Id = id;
 
@@ -74,7 +74,7 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteAboutConfirmed([FromForm] int id)
+        public async Task<IActionResult> DeleteAboutConfirmed(int id)
         {
             await _aboutService.DeleteAboutAsync(id);
 

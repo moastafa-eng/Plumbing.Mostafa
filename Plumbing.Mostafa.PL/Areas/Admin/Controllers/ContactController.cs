@@ -65,7 +65,7 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult DeleteContact([FromRoute] int id)
+        public IActionResult DeleteContact(int id)
         {
             ViewBag.Id = id;
 
@@ -73,7 +73,7 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteContactConfirmed([FromForm] int id)
+        public async Task<IActionResult> DeleteContactConfirmed(int id)
         {
             await _contactService.DeleteContactAsync(id);
 
