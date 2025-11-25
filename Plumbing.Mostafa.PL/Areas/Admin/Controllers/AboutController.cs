@@ -25,6 +25,8 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
 
 
 
+
+
         public async Task<IActionResult> GetAllAboutList()
         {
             var aboutList = await _aboutService.GetAllAboutListAsync();

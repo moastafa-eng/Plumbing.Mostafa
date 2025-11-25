@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "DeleteAbout";
+    ViewData["Title"] = "DeleteCategory";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
@@ -8,16 +8,16 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card p-5 shadow text-center">
-                <p class="fs-3 text-primary-color mb-4">Are you sure you want to delete this about us information?</p>
+                <p class="fs-3 text-primary-color mb-4">Are you sure you want to delete this Category?</p>
 
                 <div class="alert alert-primary text-start" role="alert">
-                    <strong>Warning!</strong> This action cannot be undone. All <span style="color: red"><b>about us</b></span> data will be permanently deleted.
+                    <strong>Warning!</strong> This action cannot be undone. All <span style="color: red"><b>Category</b></span> data will be permanently deleted.
                 </div>
 
-                <form asp-area="Admin" asp-controller="About" asp-action="DeleteAboutConfirmed" method="post" class="mt-4">
+                <form asp-area="Admin" asp-controller="Category" asp-action="DeleteCategoryConfirmed" method="post" class="mt-4">
                     <input type="hidden" readonly name="id" value="@ViewBag.Id" />
                     <div class="buttons d-flex justify-content-between gap-3">
-                        <a asp-area="Admin" asp-controller="About" asp-action="GetAllAboutList" class="btn-outline flex-fill">NO</a>
+                        <a asp-area="Admin" asp-controller="Category" asp-action="GetAllCategoryList" class="btn-outline flex-fill">NO</a>
                         <button type="submit" class="btn-fill flex-fill">Yes</button>
                     </div>
                 </form>
