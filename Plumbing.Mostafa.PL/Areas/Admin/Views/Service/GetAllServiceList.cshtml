@@ -1,17 +1,16 @@
-﻿@model List<CategoryListVM>
+﻿@model List<ServiceListVM>
 
 @{
-    ViewData["Title"] = "GetAllCategoryList";
+    ViewData["Title"] = "GetAllServiceList";
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-
-<h5 class="card-title">Categories</h5>
+<h5 class="card-title">Services</h5>
 
 <nav>
 	<ol class="breadcrumb">
 		<li class="breadcrumb-item"><a asp-area="Admin" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
-		<li class="breadcrumb-item active">Categories</li>
+		<li class="breadcrumb-item active">Services</li>
 	</ol>
 </nav>
 
@@ -19,7 +18,7 @@
 
 <div class="card">
 	<div class="card-body">
-		<h5 class="card-title">Category Table</h5>
+		<h5 class="card-title">Service Table</h5>
 
 		<!-- Table with hoverable rows -->
 		<table class="table table-hover">
@@ -39,18 +38,17 @@
 						<td>@item.Name</td>
 						<td>@item.CreatedDate</td>
 						<td>@item.UpdatedDate</td>
-						<td><a asp-area="Admin" asp-controller="Category" asp-action="UpdateCategory" asp-route-id="@item.Id" data-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit</a></td>
-						<td><a asp-area="Admin" asp-controller="Category" asp-action="DeleteCategory" asp-route-id="@item.Id" data-id="@item.Id" class="btn btn-outline-danger btn-sm">Delete</a></td>
+						<td><a asp-area="Admin" asp-controller="Service" asp-action="UpdateService" asp-route-id="@item.Id" data-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit</a></td>
+						<td><a asp-area="Admin" asp-controller="Service" asp-action="DeleteService" asp-route-id="@item.Id" data-id="@item.Id" class="btn btn-outline-danger btn-sm">Delete</a></td>
 					</tr>
 				</tbody>
 			}
 
 		</table>
 		<!-- End Table with hoverable rows -->
-		<a asp-area="Admin" asp-controller="Category" asp-action="AddCategory" class="btn btn-outline-success btn-sm">Add Category</a>
+		<a asp-area="Admin" asp-controller="Service" asp-action="AddService" class="btn btn-outline-success btn-sm">Add Service</a>
 
 	</div>
 </div>
-
 
 

@@ -47,15 +47,15 @@
 						}
 						<td>@item.CreatedDate</td>
 						<td>@item.UpdatedDate</td>
-						<td><a asp-area="Admin" asp-controller="HomePage" asp-action="UpdateHomePage" asp-route-id="@item.Id" data-id="@item.Id" class="btn btn-primary btn-sm">Edit</a></td>
-						<td><a asp-area="Admin" asp-controller="HomePage" asp-action="DeleteHomePage" asp-route-id="@item.Id" data-id="@item.Id" class="btn btn-danger btn-sm">Delete</a></td>
+						<td><a asp-area="Admin" asp-controller="HomePage" asp-action="UpdateHomePage" asp-route-id="@item.Id" data-id="@item.Id" class="btn btn-outline-primary btn-sm">Edit</a></td>
+						<td><a asp-area="Admin" asp-controller="HomePage" asp-action="DeleteHomePage" asp-route-id="@item.Id" data-id="@item.Id" class="btn btn-outline-danger btn-sm">Delete</a></td>
 					</tr>
 				</tbody>
 			}
 
 		</table>
 		<!-- End Table with hoverable rows -->
-		<a asp-area="Admin" asp-controller="HomePage" asp-action="AddHomePage" class="btn btn-success btn-sm">Add Home Page</a>
+		<a asp-area="Admin" asp-controller="HomePage" asp-action="AddHomePage" class="btn btn-outline-success btn-sm">Add Home Page</a>
 
 	</div>
 </div>
