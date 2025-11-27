@@ -1,6 +1,6 @@
 ﻿using EntityLayer.WebApplication.ViewModels.ContactViewModels;
 using Microsoft.AspNetCore.Mvc;
-using ServiceLayer.Services.Abstract;
+using ServiceLayer.Services.WebApplication.Abstract;
 
 namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
 {
