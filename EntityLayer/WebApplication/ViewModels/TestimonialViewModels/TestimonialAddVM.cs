@@ -1,4 +1,6 @@
-﻿namespace EntityLayer.WebApplication.ViewModels.TestimonialViewModels
+﻿using Microsoft.AspNetCore.Http;
+
+namespace EntityLayer.WebApplication.ViewModels.TestimonialViewModels
 {
     public class TestimonialAddVM
     {
@@ -7,5 +9,7 @@
         public string Title { get; set; } = null!;
         public string FileName { get; set; } = null!;
         public string FileType { get; set; } = null!;
+
+        public IFormFile Photo { get; set; } = null!;
     }
 }

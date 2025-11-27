@@ -34,6 +34,7 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
             return View(aboutList);
         }
 
+        #region Add Actions
         [HttpGet]
         public IActionResult AddAbout()
         {
@@ -47,7 +48,9 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
 
             return RedirectToAction("GetAllAboutList", "About", new { Area = ("Admin") }); // Action + Controller + Area Name
         }
+        #endregion
 
+        #region Update Actions
         [HttpGet]
         public async Task<IActionResult> UpdateAbout(int id)
         {
@@ -64,7 +67,9 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
             return RedirectToAction("GetAllAboutList", "About", new { Area = ("Admin") }); // Action + Controller + Area Name
 
         }
+        #endregion
 
+        #region Delete Actions
         [HttpGet]
         public IActionResult DeleteAbout(int id)
         {
@@ -79,6 +84,7 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
             await _aboutService.DeleteAboutAsync(id);
 
             return RedirectToAction("GetAllAboutList", "About", new { Area = ("Admin") }); // Action + Controller + Area Name
-        }
+        } 
+        #endregion
     }
 }
