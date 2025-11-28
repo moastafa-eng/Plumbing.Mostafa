@@ -19,6 +19,9 @@ namespace RepositoryLayer.Configuration.WebApplication
             builder.Property(x => x.HardWorkers).IsRequired().HasMaxLength(5);
             builder.Property(x => x.Clients).IsRequired().HasMaxLength(5);
 
+            builder.Property(x => x.FileName).IsRequired();
+            builder.Property(x => x.FileType).IsRequired();
+
             // Data Seed
             builder.HasData(new About
             {

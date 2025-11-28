@@ -1,4 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.Extensions.DependencyInjection;
+using ServiceLayer.FluentValidation.WebApplication.AboutValidation;
 using System.Reflection;
 
 namespace ServiceLayer.Extensions
@@ -26,6 +29,15 @@ namespace ServiceLayer.Extensions
                     services.AddScoped(iServiceType, serviceType);
                 }
             }
+
+            // to apply auto validation in VMs
+            services.AddFluentValidationAutoValidation(opt =>
+            {
+                opt.DisableDataAnnotationsValidation = true;
+            });
+
+            // to find the validator in assembly file
+            services.AddValidatorsFromAssemblyContaining<AboutAddValidation>();
 
             return services;
         }
