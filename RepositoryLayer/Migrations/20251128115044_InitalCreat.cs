@@ -7,7 +7,7 @@
 namespace RepositoryLayer.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitalCreat : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -205,64 +205,64 @@ namespace RepositoryLayer.Migrations
                 columns: new[] { "Id", "CreatedDate", "Name", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1, "11/16/2025", "Projects", null },
-                    { 2, "11/16/2025", "SitWorks", null }
+                    { 1, "11/28/2025", "Projects", null },
+                    { 2, "11/28/2025", "SitWorks", null }
                 });
 
             migrationBuilder.InsertData(
                 table: "Contacts",
                 columns: new[] { "Id", "Call", "CreatedDate", "Email", "Location", "Map", "UpdatedDate" },
-                values: new object[] { 1, "01555301076", "11/16/2025", "mostafa.fayez@gmail.com", "Cairo, NasrCity, AbasStreet, 11OmarLotfy", "Test Map Link", null });
+                values: new object[] { 1, "01555301076", "11/28/2025", "mostafa.fayez@gmail.com", "Cairo, NasrCity, AbasStreet, 11OmarLotfy", "Test Map Link", null });
 
             migrationBuilder.InsertData(
                 table: "HomePages",
                 columns: new[] { "Id", "CreatedDate", "Description", "Header", "UpdatedDate", "VideoLink" },
-                values: new object[] { 1, "11/16/2025", "We provide high-quality plumbing solutions for homes and businesses. Our expert team handles everything from leak repairs and drain cleaning to complete system installations — always with honesty, speed, and exceptional care.", "Professional Plumbing Services You Can Rely On", null, "Test Video Link" });
+                values: new object[] { 1, "11/28/2025", "We provide high-quality plumbing solutions for homes and businesses. Our expert team handles everything from leak repairs and drain cleaning to complete system installations — always with honesty, speed, and exceptional care.", "Professional Plumbing Services You Can Rely On", null, "Test Video Link" });
 
             migrationBuilder.InsertData(
                 table: "Services",
                 columns: new[] { "Id", "CreatedDate", "Description", "Icon", "Name", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1, "11/16/2025", "We are a trusted plumbing company offering reliable installation, maintenance, and repair services. Our experienced team is dedicated to delivering quality workmanship, timely service, and complete customer satisfaction for every project we handle.", "bi bi-Service1", "Plumbing Service 1", null },
-                    { 2, "11/16/2025", "We are a trusted plumbing company offering reliable installation, maintenance, and repair services. Our experienced team is dedicated to delivering quality workmanship, timely service, and complete customer satisfaction for every project we handle.", "bi bi-Service2", "Plumbing Service 2", null },
-                    { 3, "11/16/2025", "We are a trusted plumbing company offering reliable installation, maintenance, and repair services. Our experienced team is dedicated to delivering quality workmanship, timely service, and complete customer satisfaction for every project we handle.", "bi bi-Service3", "Plumbing Service 3", null }
+                    { 1, "11/28/2025", "We are a trusted plumbing company offering reliable installation, maintenance, and repair services. Our experienced team is dedicated to delivering quality workmanship, timely service, and complete customer satisfaction for every project we handle.", "bi bi-Service1", "Plumbing Service 1", null },
+                    { 2, "11/28/2025", "We are a trusted plumbing company offering reliable installation, maintenance, and repair services. Our experienced team is dedicated to delivering quality workmanship, timely service, and complete customer satisfaction for every project we handle.", "bi bi-Service2", "Plumbing Service 2", null },
+                    { 3, "11/28/2025", "We are a trusted plumbing company offering reliable installation, maintenance, and repair services. Our experienced team is dedicated to delivering quality workmanship, timely service, and complete customer satisfaction for every project we handle.", "bi bi-Service3", "Plumbing Service 3", null }
                 });
 
             migrationBuilder.InsertData(
                 table: "SocialMedias",
                 columns: new[] { "Id", "CreatedDate", "Facebook", "Instagram", "LinkedIn", "Twitter", "UpdatedDate" },
-                values: new object[] { 1, "11/16/2025", "TestFacebook", "TestInstagram", null, null, null });
+                values: new object[] { 1, "11/28/2025", "TestFacebook", "TestInstagram", null, null, null });
 
             migrationBuilder.InsertData(
                 table: "Teams",
                 columns: new[] { "Id", "CreatedDate", "Facebook", "FileName", "FileType", "FullName", "Instagram", "LinkedIn", "Title", "Twitter", "UpdatedDate" },
-                values: new object[] { 1, "11/16/2025", "FaceBook", "Test", "Test", "Plumbing Team", "Instagram", null, "Skilled Plumbers You Can Trust", null, null });
+                values: new object[] { 1, "11/28/2025", "FaceBook", "Test", "Test", "Plumbing Team", "Instagram", null, "Skilled Plumbers You Can Trust", null, null });
 
             migrationBuilder.InsertData(
                 table: "Testimonial",
                 columns: new[] { "Id", "Comment", "CreatedDate", "FileName", "FileType", "FullName", "Title", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1, "the best testimonial at all", "11/16/2025", "Test", "Test", "Testimonial Name1", "Trusted Testimonial1", null },
-                    { 2, "the best testimonial at all", "11/16/2025", "Test", "Test", "Testimonial Name2", "Trusted Testimonial2", null },
-                    { 3, "the best testimonial at all", "11/16/2025", "Test", "Test", "Testimonial Name3", "Trusted Testimonial3", null }
+                    { 1, "the best testimonial at all", "11/28/2025", "Test", "Test", "Testimonial Name1", "Trusted Testimonial1", null },
+                    { 2, "the best testimonial at all", "11/28/2025", "Test", "Test", "Testimonial Name2", "Trusted Testimonial2", null },
+                    { 3, "the best testimonial at all", "11/28/2025", "Test", "Test", "Testimonial Name3", "Trusted Testimonial3", null }
                 });
 
             migrationBuilder.InsertData(
                 table: "Abouts",
                 columns: new[] { "Id", "Clients", "CreatedDate", "Description", "FileName", "FileType", "HardWorkers", "Header", "HourOfSupport", "Projects", "SocialMediaId", "UpdatedDate" },
-                values: new object[] { 1, 5, "11/16/2025", "We are a trusted plumbing company offering reliable installation, maintenance, and repair services. Our experienced team is dedicated to delivering quality workmanship, timely service, and complete customer satisfaction for every project we handle.", "Test", "Test", 3, "Professional Plumbing Solutions You Can Trust", 150, 5, 1, null });
+                values: new object[] { 1, 5, "11/28/2025", "We are a trusted plumbing company offering reliable installation, maintenance, and repair services. Our experienced team is dedicated to delivering quality workmanship, timely service, and complete customer satisfaction for every project we handle.", "Test", "Test", 3, "Professional Plumbing Solutions You Can Trust", 150, 5, 1, null });
 
             migrationBuilder.InsertData(
                 table: "Portfolios",
                 columns: new[] { "Id", "CategoryId", "CreatedDate", "FileName", "FileType", "Title", "UpdatedDate" },
                 values: new object[,]
                 {
-                    { 1, 1, "11/16/2025", "Test", "Test", "Test Picture", null },
-                    { 2, 1, "11/16/2025", "Test2", "Test2", "Test Picture2", null },
-                    { 3, 2, "11/16/2025", "Test3", "Test3", "Test Picture3", null },
-                    { 4, 2, "11/16/2025", "Test4", "Test4", "Test Picture4", null }
+                    { 1, 1, "11/28/2025", "Test", "Test", "Test Picture", null },
+                    { 2, 1, "11/28/2025", "Test2", "Test2", "Test Picture2", null },
+                    { 3, 2, "11/28/2025", "Test3", "Test3", "Test Picture3", null },
+                    { 4, 2, "11/28/2025", "Test4", "Test4", "Test Picture4", null }
                 });
 
             migrationBuilder.CreateIndex(
