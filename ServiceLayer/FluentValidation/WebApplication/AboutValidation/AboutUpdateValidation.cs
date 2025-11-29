@@ -5,12 +5,12 @@ namespace ServiceLayer.FluentValidation.WebApplication.AboutValidation
 {
     public class AboutUpdateValidation : AbstractValidator<AboutUpdateVM>
     {
-        public AboutUpdaetValidtion()
+        public AboutUpdateValidation()
         {
             RuleFor(x => x.Header)
-    .NotEmpty()
-    .NotNull()
-    .MaximumLength(200);
+                .NotEmpty()
+                .NotNull()
+                .MaximumLength(200);
 
             RuleFor(x => x.Description)
                 .NotEmpty()

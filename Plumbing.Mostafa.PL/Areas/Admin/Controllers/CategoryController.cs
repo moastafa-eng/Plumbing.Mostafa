@@ -1,4 +1,6 @@
 ﻿using EntityLayer.WebApplication.ViewModels.CategoryViewModels;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Services.WebApplication.Abstract;
 
@@ -16,10 +18,15 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService; // take reference from CategoryService
+        private readonly IValidator<CategoryAddVM> _addValidation;
+        private readonly IValidator<CategoryUpdateVM> _updateValidation;
 
-        public CategoryController(ICategoryService categoryService)
+        public CategoryController(ICategoryService categoryService, IValidator<CategoryAddVM> addValidation, 
+            IValidator<CategoryUpdateVM> updateValidation)
         {
             _categoryService = categoryService; // inject categoryService via constructor
+            _addValidation = addValidation;
+            _updateValidation = updateValidation;
         }
 
 
@@ -40,14 +47,24 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCategory(CategoryAddVM request)
         {
-            await _categoryService.AddCategoryAsync(request); // Add new Category to DB.
+            var validation = await _addValidation.ValidateAsync(request);
 
-            return RedirectToAction("GetAllCategoryList", "Category", new { Area = ("Admin") }); // Action + Controller + Area Name
+            if(validation.IsValid)
+            {
+                await _categoryService.AddCategoryAsync(request); // Add new Category to DB.
+
+                return RedirectToAction("GetAllCategoryList", "Category", new { Area = ("Admin") }); // Action + Controller + Area Name
+            }
+
+            validation.AddToModelState(this.ModelState);
+
+            return View();
         }
 
         [HttpGet]
         public async Task<IActionResult> UpdateCategory(int id)
         {
+
             var category = await _categoryService.GetCategoryByIdAsync(id);
 
             return View(category); // return Empty View with old information
@@ -56,10 +73,18 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateCategory(CategoryUpdateVM request)
         {
-            await _categoryService.UpdateCategoryAsync(request);
+            var validation = await _updateValidation.ValidateAsync(request);
 
-            return RedirectToAction("GetAllCategoryList", "Category", new { Area = ("Admin") }); // Action + Controller + Area Name
+            if(validation.IsValid)
+            {
+                await _categoryService.UpdateCategoryAsync(request);
 
+                return RedirectToAction("GetAllCategoryList", "Category", new { Area = ("Admin") }); // Action + Controller + Area Name
+            }
+
+            validation.AddToModelState(this.ModelState);
+
+            return View();
         }
 
         [HttpGet]

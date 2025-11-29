@@ -19,12 +19,14 @@
         <!-- Add About Us Form -->
         @* enctype="multipart/form-data" → allows the form to send files (images, docs…) to the server. *@
         <form asp-area="Admin" asp-controller="Category" asp-action="UpdateCategory" method="post" class="row g-3">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="RowVersion" />
             <div class="col-md-12">
                 <div class="form-floating">
                     <input asp-for="Name" type="text" class="form-control" placeholder="Name">
                     <label asp-for="Name">Name</label>
+                    <span asp-validation-for="Name" class="text-danger"></span>
                 </div>
             </div>
 
