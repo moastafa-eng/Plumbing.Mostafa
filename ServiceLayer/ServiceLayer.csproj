@@ -22,7 +22,6 @@
     <Folder Include="Helpers\Identity\" />
     <Folder Include="Helpers\WebApplication\" />
     <Folder Include="Messages\Identity\" />
-    <Folder Include="Messages\WebApplication\" />
     <Folder Include="MiddleWares\Identity\" />
     <Folder Include="MiddleWares\WebApplication\" />
     <Folder Include="Services\Identity\Abstract\" />

@@ -1,5 +1,6 @@
 ﻿using EntityLayer.WebApplication.ViewModels.TeamViewModels;
 using FluentValidation;
+using ServiceLayer.Messages.WebApplication;
 
 namespace ServiceLayer.FluentValidation.WebApplication.TeamValidation
 {
@@ -8,26 +9,18 @@ namespace ServiceLayer.FluentValidation.WebApplication.TeamValidation
         public TeamAddValidation()
         {
             RuleFor(x => x.FullName)
-                .NotEmpty()
-                .NotNull()
-                .MaximumLength(100);
+                .NotEmpty().WithMessage(ValidationMessages.NullEmptyMessage("FullName"))
+                .NotNull().WithMessage(ValidationMessages.NullEmptyMessage("FullName"))
+                .MaximumLength(100).WithMessage(ValidationMessages.MaximumCharacterAllowence("FullName", 100));
 
             RuleFor(x => x.Title)
-                .NotEmpty()
-                .NotNull()
-                .MaximumLength(200);
-
-            RuleFor(x => x.FileName)
-                .NotEmpty()
-                .NotNull();
-
-            RuleFor(x => x.FileType)
-                .NotEmpty()
-                .NotNull();
+                .NotEmpty().WithMessage(ValidationMessages.NullEmptyMessage("Title"))
+                .NotNull().WithMessage(ValidationMessages.NullEmptyMessage("Title"))
+                .MaximumLength(200).WithMessage(ValidationMessages.MaximumCharacterAllowence("Title", 200));
 
             RuleFor(x => x.Photo)
-                .NotNull()
-                .NotEmpty();
+                .NotNull().WithMessage(ValidationMessages.NullEmptyMessage("Photo"))
+                .NotEmpty().WithMessage(ValidationMessages.NullEmptyMessage("Photo"));
         }
     }
 }

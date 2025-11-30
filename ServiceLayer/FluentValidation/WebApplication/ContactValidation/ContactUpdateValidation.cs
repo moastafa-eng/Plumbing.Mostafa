@@ -1,5 +1,6 @@
 ﻿using EntityLayer.WebApplication.ViewModels.ContactViewModels;
 using FluentValidation;
+using ServiceLayer.Messages.WebApplication;
 
 namespace ServiceLayer.FluentValidation.WebApplication.ContactValidation
 {
@@ -8,23 +9,23 @@ namespace ServiceLayer.FluentValidation.WebApplication.ContactValidation
         public ContactUpdateValidation()
         {
             RuleFor(x => x.Location)
-                .NotNull()
-                .NotEmpty()
-                .MaximumLength(200);
+                .NotNull().WithMessage(ValidationMessages.NullEmptyMessage("Location"))
+                .NotEmpty().WithMessage(ValidationMessages.NullEmptyMessage("Location"))
+                .MaximumLength(200).WithMessage(ValidationMessages.MaximumCharacterAllowence("Location", 200));
 
             RuleFor(x => x.Email)
-                .NotNull()
-                .NotEmpty()
-                .MaximumLength(100);
+                .NotNull().WithMessage(ValidationMessages.NullEmptyMessage("Email"))
+                .NotEmpty().WithMessage(ValidationMessages.NullEmptyMessage("Email"))
+                .MaximumLength(100).WithMessage(ValidationMessages.MaximumCharacterAllowence("Email", 100));
 
             RuleFor(x => x.Call)
-                .NotNull()
-                .NotEmpty()
-                .MaximumLength(13);
+                .NotNull().WithMessage(ValidationMessages.NullEmptyMessage("Call"))
+                .NotEmpty().WithMessage(ValidationMessages.NullEmptyMessage("Call"))
+                .MaximumLength(13).WithMessage(ValidationMessages.MaximumCharacterAllowence("Call", 13));
 
             RuleFor(x => x.Map)
-                .NotNull()
-                .NotEmpty();
+                .NotNull().WithMessage(ValidationMessages.NullEmptyMessage("Map"))
+                .NotEmpty().WithMessage(ValidationMessages.NullEmptyMessage("Map"));
         }
     }
 }
