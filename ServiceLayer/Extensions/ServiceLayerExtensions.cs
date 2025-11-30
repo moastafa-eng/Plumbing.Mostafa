@@ -3,6 +3,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceLayer.FluentValidation.WebApplication.AboutValidation;
 using System.Reflection;
+using ServiceLayer.Extensions.Identity
 
 namespace ServiceLayer.Extensions
 {
@@ -10,6 +11,8 @@ namespace ServiceLayer.Extensions
     {
         public static IServiceCollection LoadServiceLayerExtensions(this IServiceCollection services)
         {
+            services.LoadIdentityExtensions();
+
             // Find All Configurations in Assembly file in Service layer.
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
