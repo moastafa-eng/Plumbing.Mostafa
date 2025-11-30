@@ -1,4 +1,6 @@
 ﻿using EntityLayer.WebApplication.ViewModels.HomePageViewModels;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Services.WebApplication.Abstract;
 
@@ -8,10 +10,15 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
     public class HomePageController : Controller
     {
         private readonly IHomePageService _homePageService;
+        private readonly IValidator<HomePageAddVM> _addValidation;
+        private readonly IValidator<HomePageUpdateVM> _updateValidation;
 
-        public HomePageController(IHomePageService homePageService)
+        public HomePageController(IHomePageService homePageService, IValidator<HomePageAddVM> addValidation, 
+            IValidator<HomePageUpdateVM> updateValidation)
         {
             _homePageService = homePageService;
+            _addValidation = addValidation;
+            _updateValidation = updateValidation;
         }
 
 
@@ -33,9 +40,18 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddHomePage(HomePageAddVM request)
         {
-            await _homePageService.AddHomePageAsync(request);
+            var validation = await _addValidation.ValidateAsync(request);
 
-            return RedirectToAction("GetAllHomePageList", "HomePage", new { area = ("Admin") });
+            if(validation.IsValid)
+            {
+                await _homePageService.AddHomePageAsync(request);
+
+                return RedirectToAction("GetAllHomePageList", "HomePage", new { area = ("Admin") });
+            }
+
+            validation.AddToModelState(this.ModelState);
+
+            return View();
         }
 
         [HttpGet]
@@ -49,9 +65,18 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateHomePage(HomePageUpdateVM request)
         {
-            await _homePageService.UpdateHomePageAsync(request);
+            var validation = await _updateValidation.ValidateAsync(request);
 
-            return RedirectToAction("GetAllHomePageList", "HomePage", new { area = ("Admin") });
+            if(validation.IsValid)
+            {
+                await _homePageService.UpdateHomePageAsync(request);
+
+                return RedirectToAction("GetAllHomePageList", "HomePage", new { area = ("Admin") });
+            }
+
+            validation.AddToModelState(this.ModelState);
+
+            return View();
         }
 
         [HttpGet]

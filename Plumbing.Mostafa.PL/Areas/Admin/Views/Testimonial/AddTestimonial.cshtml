@@ -21,12 +21,14 @@
         <!-- Add About Us Form -->
         @* enctype="multipart/form-data" → allows the form to send files (images, docs…) to the server. *@
         <form asp-area="Admin" asp-controller="Testimonial" asp-action="AddTestimonial" method="post" class="row g-3" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="FileName" value="test" />
             <input type="hidden" asp-for="FileType" value="test" />
             <div class="col-md-12">
                 <div class="form-floating">
                     <input asp-for="FullName" type="text" class="form-control" placeholder="Name">
                     <label asp-for="FullName">Name</label>
+                    <span asp-validation-for="FileName" calss="text-danger"></span>
                 </div>
             </div>
 
@@ -34,6 +36,7 @@
                 <div class="form-floating">
                     <input asp-for="Title" type="text" class="form-control" placeholder="Title">
                     <label asp-for="Title">Title</label>
+                    <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
             </div>
 
@@ -41,6 +44,7 @@
                 <div class="form-floating">
                     <textarea asp-for="Comment" class="form-control h-50" placeholder="Comment" rows="3"></textarea>
                     <label asp-for="Comment">Comment</label>
+                    <span asp-validation-for="Comment" class="text-danger"></span>
                 </div>
             </div>
 
@@ -48,7 +52,7 @@
                 <div class="col-md-12">
                     <div class="form-floating">
                         <input asp-for="Photo" accept="image/*" type="file" class="form-control" placeholder="Photo">
-                        <span asp-validation-for="Photo" class="text-danger"></span>
+                    <span asp-validation-for="Photo" class="text-danger"></span>
                     </div>
                 </div>
 

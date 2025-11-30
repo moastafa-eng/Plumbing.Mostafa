@@ -22,12 +22,14 @@
 
         @* enctype="multipart/form-data" → allows the form to send files (images, docs…) to the server. *@
         <form asp-area="Admin" asp-controller="Portfolio" asp-action="AddPortfolio" method="post" class="row g-3" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="FileName" value="test" />
             <input type="hidden" asp-for="FileType" value="test" />
             <div class="col-md-12"> 
                 <div class="form-floating">
                     <input asp-for="Title" type="text" class="form-control" placeholder="Header">
                     <label asp-for="Title">Header</label>
+                    <span asp-validation-for="Title" class="text-danger"></span>
                 </div>
             </div>
 
@@ -36,6 +38,7 @@
                 <div class="form-floating">
                     <input asp-for="Category.Name" type="text" class="form-control" placeholder="Category">
                     <label  asp-for="Category.Name">Category</label>
+                    <span asp-validation-for="Category.Name" class="text-danger"></span>
                 </div>
             </div>
 

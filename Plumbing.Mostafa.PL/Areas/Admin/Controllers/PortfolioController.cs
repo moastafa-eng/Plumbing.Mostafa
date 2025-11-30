@@ -1,4 +1,6 @@
 ﻿using EntityLayer.WebApplication.ViewModels.PortfolioViewModels;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Services.WebApplication.Abstract;
 
@@ -8,10 +10,15 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
     public class PortfolioController : Controller
     {
         private readonly IPortfolioService _portfolioService;
+        private readonly IValidator<PortfolioAddVM> _addValidation;
+        private readonly IValidator<PortfolioUpdateVM> _updateValidation;
 
-        public PortfolioController(IPortfolioService portfolioService)
+        public PortfolioController(IPortfolioService portfolioService, IValidator<PortfolioAddVM> addValidation,
+            IValidator<PortfolioUpdateVM> updateValidation)
         {
             _portfolioService = portfolioService;
+            _addValidation = addValidation;
+            _updateValidation = updateValidation;
         }
 
 
@@ -33,9 +40,18 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPortfolio(PortfolioAddVM request) 
         {
-            await _portfolioService.AddPortfolioAsync(request);
+            var validation = await _addValidation.ValidateAsync(request);
 
-            return RedirectToAction("GetAllPortfolioList", "Portfolio", new { area = ("Admin") });
+            if(validation.IsValid)
+            {
+                await _portfolioService.AddPortfolioAsync(request);
+
+                return RedirectToAction("GetAllPortfolioList", "Portfolio", new { area = ("Admin") });
+            }
+
+            validation.AddToModelState(this.ModelState);
+
+            return View();
         }
 
         [HttpGet]
@@ -49,9 +65,20 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdatePortfolio(PortfolioUpdateVM request)
         {
-            await _portfolioService.UpdatePortfolioAsync(request);
 
-            return RedirectToAction("GetAllPortfolioList", "Portfolio", new { area = ("Admin") });
+            var validation = await _updateValidation.ValidateAsync(request);
+
+            if (validation.IsValid)
+            {
+                await _portfolioService.UpdatePortfolioAsync(request);
+
+                return RedirectToAction("GetAllPortfolioList", "Portfolio", new { area = ("Admin") });
+            }
+
+            validation.AddToModelState(this.ModelState);
+
+            return View();
+
         }
 
         [HttpGet]

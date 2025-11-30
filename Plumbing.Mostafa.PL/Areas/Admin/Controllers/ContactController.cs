@@ -1,4 +1,6 @@
 ﻿using EntityLayer.WebApplication.ViewModels.ContactViewModels;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Services.WebApplication.Abstract;
 
@@ -17,11 +19,16 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
     public class ContactController : Controller
     {
         private readonly IContactService _contactService; // take reference from ContactService
+        private readonly IValidator<ContactAddVM> _addValidation;
+        private readonly IValidator<ContactUpdateVM> _updateValidation;
 
-        public ContactController(IContactService contactService)
+        public ContactController(IContactService contactService, IValidator<ContactAddVM> addValidation,
+            IValidator<ContactUpdateVM> updateValidation)
         {
             _contactService = contactService; // inject contactService via constructor
-        }
+            _addValidation = addValidation;
+            _updateValidation = updateValidation;
+        }
 
 
 
@@ -42,10 +49,19 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> AddContact(ContactAddVM request)
         {
-            await _contactService.AddContactAsync(request); // Add new Contact to DB.
+            var validation = await _addValidation.ValidateAsync(request);
 
-            return RedirectToAction("GetAllContactList", "Contact", new { Area = ("Admin") }); // Action + Controller + Area Name
-        }
+            if(validation.IsValid)
+            {
+                await _contactService.AddContactAsync(request); // Add new Contact to DB.
+
+                return RedirectToAction("GetAllContactList", "Contact", new { Area = ("Admin") }); // Action + Controller + Area Name
+            }
+
+            validation.AddToModelState(this.ModelState);
+
+            return View();
+        }
 
         [HttpGet]
         public async Task<IActionResult> UpdateContact(int id)
@@ -58,10 +74,18 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateContact(ContactUpdateVM request)
         {
-            await _contactService.UpdateContactAsync(request);
+            var validation = await _updateValidation.ValidateAsync(request);
 
-            return RedirectToAction("GetAllContactList", "Contact", new { Area = ("Admin") }); // Action + Controller + Area Name
+            if(validation.IsValid)
+            {
+                await _contactService.UpdateContactAsync(request);
 
+                return RedirectToAction("GetAllContactList", "Contact", new { Area = ("Admin") }); // Action + Controller + Area Name
+            }
+
+            validation.AddToModelState(this.ModelState);
+
+            return View();
         }
 
         [HttpGet]
