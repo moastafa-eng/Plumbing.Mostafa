@@ -29,7 +29,7 @@ namespace Plumbing.Mostafa.PL
             #region Application middle ware's 
             app.UseHttpsRedirection(); // Redirect to HTTPS
             app.UseRouting(); // Prepare Routing
-
+            app.UseAuthentication(); // check Authentication
             app.UseAuthorization(); // Check Authorization 
 
             app.MapStaticAssets(); // Enable static files

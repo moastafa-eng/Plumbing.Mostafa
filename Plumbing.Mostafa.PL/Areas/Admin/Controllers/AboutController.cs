@@ -73,7 +73,6 @@ FluentValidation setup & flow (summary):
             return View(aboutList);
         }
 
-        #region Add Actions
         [HttpGet]
         public IActionResult AddAbout()
         {
@@ -83,7 +82,8 @@ FluentValidation setup & flow (summary):
         [HttpPost]
         public async Task<IActionResult> AddAbout(AboutAddVM request)
         {
-            var validation = await _addValidator.ValidateAsync(request);
+            // await + ValidateAsync : To prevent the blocking while validation.
+            var validation = await _addValidator.ValidateAsync(request); 
 
             if(validation.IsValid)
             {
@@ -95,9 +95,8 @@ FluentValidation setup & flow (summary):
 
             return View();
         }
-        #endregion
 
-        #region Update Actions
+
         [HttpGet]
         public async Task<IActionResult> UpdateAbout(int id)
         {
@@ -122,9 +121,7 @@ FluentValidation setup & flow (summary):
 
             return View();
         }
-        #endregion
 
-        #region Delete Actions
         [HttpGet]
         public IActionResult DeleteAbout(int id)
         {
@@ -140,6 +137,5 @@ FluentValidation setup & flow (summary):
 
             return RedirectToAction("GetAllAboutList", "About", new { Area = ("Admin") }); // Action + Controller + Area Name
         } 
-        #endregion
     }
 }

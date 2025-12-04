@@ -17,10 +17,7 @@
     <Folder Include="Extensions\WebApplication\" />
     <Folder Include="Filters\Identity\" />
     <Folder Include="Filters\WebApplication\" />
-    <Folder Include="FluentValidation\Identity\" />
-    <Folder Include="Helpers\Identity\" />
     <Folder Include="Helpers\WebApplication\" />
-    <Folder Include="Messages\Identity\" />
     <Folder Include="MiddleWares\Identity\" />
     <Folder Include="MiddleWares\WebApplication\" />
     <Folder Include="Services\Identity\Abstract\" />

@@ -3,7 +3,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.Extensions.DependencyInjection;
 using ServiceLayer.FluentValidation.WebApplication.AboutValidation;
 using System.Reflection;
-using ServiceLayer.Extensions.Identity
+using ServiceLayer.Extensions.Identity;
 
 namespace ServiceLayer.Extensions
 {
