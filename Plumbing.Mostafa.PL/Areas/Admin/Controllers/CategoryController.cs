@@ -1,6 +1,7 @@
 ﻿using EntityLayer.WebApplication.ViewModels.CategoryViewModels;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Services.WebApplication.Abstract;
 
@@ -14,6 +15,7 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
     // Without this attribute, the controller will NOT be matched
     // to the Admin Area even if it is inside the Admin folder.
     #endregion
+    [Authorize]
     [Area("Admin")]
     public class CategoryController : Controller
     {

@@ -38,10 +38,10 @@ namespace ServiceLayer.Extensions.Identity
                 newCookie.Name = "PlumbingCompany";
 
                 // Path to redirect the user when trying to access something that requires login
-                opt.LoginPath = new PathString("/Authentication/LogIn");
+                opt.LoginPath = new PathString("/Authentication/SignIn");
 
                 // Path to redirect the user when they log out
-                opt.LogoutPath = new PathString("/Authentication/LogOut");
+                opt.LogoutPath = new PathString("/Authentication/SignOut");
 
                 // Path to redirect the user if they try to access something without permission
                 opt.AccessDeniedPath = new PathString ("/Authentication/AccessDenied");

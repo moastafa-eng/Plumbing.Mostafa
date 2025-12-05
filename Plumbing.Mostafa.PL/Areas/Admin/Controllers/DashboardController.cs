@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
 {
@@ -10,7 +11,7 @@ namespace Plumbing.Mostafa.PL.Areas.Admin.Controllers
     // Without this attribute, the controller will NOT be matched
     // to the Admin Area even if it is inside the Admin folder.
     #endregion
-
+    [Authorize]
     [Area("Admin")]
     public class DashboardController : Controller
     {

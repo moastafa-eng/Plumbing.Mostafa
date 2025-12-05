@@ -40,6 +40,9 @@ namespace Plumbing.Mostafa.PL.Controllers
             _signInManager = signInManager;
         }
 
+
+
+
         [HttpGet]
         public IActionResult SignUp()
         {
@@ -71,7 +74,7 @@ namespace Plumbing.Mostafa.PL.Controllers
                 return View();
             }
 
-            return RedirectToAction("LogIn", "Authentication");
+            return RedirectToAction("SignIn", "Authentication");
         }
 
         [HttpGet]
@@ -90,7 +93,6 @@ namespace Plumbing.Mostafa.PL.Controllers
 
             if(!Validation.IsValid)
             {
-                ViewBag.Result = "Failed";
                 Validation.AddToModelState(this.ModelState);
                 return View();
             }
