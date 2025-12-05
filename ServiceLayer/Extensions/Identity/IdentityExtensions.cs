@@ -16,7 +16,7 @@ namespace ServiceLayer.Extensions.Identity
                 opt.Password.RequiredLength = 6;
                 opt.Password.RequireNonAlphanumeric = true;
                 opt.Password.RequiredUniqueChars = 2;
-                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3);
+                opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(60);
                 opt.Lockout.MaxFailedAccessAttempts = 3;
             })
             // Adds RoleManager<AppRole> to the DI container (optional because AddIdentity already adds it)

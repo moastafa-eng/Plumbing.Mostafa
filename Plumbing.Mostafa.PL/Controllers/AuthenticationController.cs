@@ -3,6 +3,7 @@
 using AutoMapper;
 using EntityLayer.Identity.Entities;
 using EntityLayer.Identity.VewModels;
+using EntityLayer.Identity.ViewModels;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
@@ -25,14 +26,18 @@ namespace Plumbing.Mostafa.PL.Controllers
         #endregion
         private readonly UserManager<AppUser> _userManager;
         private readonly IValidator<SignUpVM> _signUpValidator;
+        private readonly IValidator<SignInVM> _signInValidation;
+        private readonly SignInManager<AppUser> _signInManager;
         private readonly IMapper _iMapper;
 
         public AuthenticationController(UserManager<AppUser> userManager, IValidator<SignUpVM> signUpValidator, 
-            IMapper iMapper)
+            IMapper iMapper, IValidator<SignInVM> signInValidation, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
             _signUpValidator = signUpValidator;
             _iMapper = iMapper;
+            _signInValidation = signInValidation;
+            _signInManager = signInManager;
         }
 
         [HttpGet]
@@ -67,7 +72,65 @@ namespace Plumbing.Mostafa.PL.Controllers
             }
 
             return RedirectToAction("LogIn", "Authentication");
-         
         }
+
+        [HttpGet]
+        public IActionResult SignIn()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SignIn(SignInVM request, string? returnUrl = null)
+        {
+            // The user access the page that he wants to Access it before log in
+            returnUrl = returnUrl ?? Url.Action("Index", "Dashboard", new { area = "Admin" });
+
+            var Validation = await _signInValidation.ValidateAsync(request);
+
+            if(!Validation.IsValid)
+            {
+                ViewBag.Result = "Failed";
+                Validation.AddToModelState(this.ModelState);
+                return View();
+            }
+
+            // => Fine user by email
+            var hasUser = await _userManager.FindByEmailAsync(request.Email);
+
+            // Check if user exist
+            if(hasUser == null)
+            {
+                ViewBag.Result = "Failed";
+                ModelState.AddModelErrorList(new List<string> {"Email or Password is wrong"}); // "Or Password" for security reasons.
+                return View();
+            }
+
+            // SignIn
+            var signInResult = await _signInManager.PasswordSignInAsync(hasUser, request.Password, request.RememberMe, true); // true in last : Lock out in failure
+
+            // => if SignIn Succeeded : 
+            if(signInResult.Succeeded)
+            {
+                // ! it can not be null
+                return Redirect(returnUrl!);
+            }
+
+            // => Lockout
+            if(signInResult.IsLockedOut)
+            {
+                ViewBag.Result = "Lockout";
+                ModelState.AddModelErrorList(new List<string> { "Your account has been locked out for 60 Second" });
+                return View();
+            }
+
+            // => If Sign In Not Succeeded : 
+            ViewBag.Result = "FailedSignIn";
+            ModelState.AddModelErrorList(new List<string> {"Email or Password is wrong", $"Failed attempts{
+                await _userManager.GetAccessFailedCountAsync(hasUser)}" }); // Number of attempts remaining.
+
+            return View();
+        }
+
     }
 }
