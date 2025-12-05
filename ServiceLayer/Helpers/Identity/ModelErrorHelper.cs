@@ -14,8 +14,7 @@ namespace ServiceLayer.Helpers.Identity
             }
         }
 
-        public static void AddModelErrorList(this ModelStateDictionary modelState,
-        IEnumerable<IdentityError> errors)
+        public static void AddModelErrorList(this ModelStateDictionary modelState, IEnumerable<IdentityError> errors)
         {
             foreach (var error in errors)
             {
