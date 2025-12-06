@@ -8,7 +8,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using ServiceLayer.Helpers.Identity;
+using ServiceLayer.Helpers.Identity.ModelStateHelper;
 
 namespace Plumbing.Mostafa.PL.Controllers
 {
@@ -25,19 +25,22 @@ namespace Plumbing.Mostafa.PL.Controllers
         // This service is automatically registered in the DI container via AddIdentity().
         #endregion
         private readonly UserManager<AppUser> _userManager;
-        private readonly IValidator<SignUpVM> _signUpValidator;
-        private readonly IValidator<SignInVM> _signInValidation;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IMapper _iMapper;
+        private readonly IValidator<SignUpVM> _signUpValidator;
+        private readonly IValidator<SignInVM> _signInValidation;
+        private readonly IValidator<ForgotPasswordVM> _forgotPasswordValidation;
 
         public AuthenticationController(UserManager<AppUser> userManager, IValidator<SignUpVM> signUpValidator, 
-            IMapper iMapper, IValidator<SignInVM> signInValidation, SignInManager<AppUser> signInManager)
+            IMapper iMapper, IValidator<SignInVM> signInValidation, SignInManager<AppUser> signInManager, 
+            IValidator<ForgotPasswordVM> forgotPasswordValidation)
         {
             _userManager = userManager;
             _signUpValidator = signUpValidator;
             _iMapper = iMapper;
             _signInValidation = signInValidation;
             _signInManager = signInManager;
+            _forgotPasswordValidation = forgotPasswordValidation;
         }
 
 
@@ -76,6 +79,7 @@ namespace Plumbing.Mostafa.PL.Controllers
 
             return RedirectToAction("SignIn", "Authentication");
         }
+
 
         [HttpGet]
         public IActionResult SignIn()
@@ -134,5 +138,41 @@ namespace Plumbing.Mostafa.PL.Controllers
             return View();
         }
 
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordVM request)
+        {
+            var validation = _forgotPasswordValidation.Validate(request);
+
+            if(!validation.IsValid)
+            {
+                validation.AddToModelState(this.ModelState); // i don't understand this line.
+                return View();
+            }
+
+            var hasUser = await _userManager.FindByEmailAsync(request.Email);
+
+            if(hasUser == null)
+            {
+                ViewBag.Result = "UserDoen'tExist";
+                ModelState.AddModelErrorList(new List<string> { "User does not exist!" }); // I don't understand this line (Extension method (AddModelErroreList))
+                return View();
+            }
+
+            string resetToken = await _userManager.GeneratePasswordResetTokenAsync(hasUser); // I don't understand this line of code.
+
+            var passwordResetLink = Url.Action("ResetPassword", "Authentication", new
+            {
+                UserId = hasUser.Id,
+                Token = resetToken,
+                HttpContext.Request.Scheme
+            });
+        }
     }
 }
