@@ -5,7 +5,7 @@ namespace ServiceLayer.Helpers.Identity.EmailHelper
     // I don't understand this topic.
     public interface IEmailSendMethod
     {
-        Task SendPasswordResetLinkWithToken(string passwordResetLink, string token);
+        Task SendPasswordResetLinkWithToken(string passwordResetLink, string passwordResetToken);
     }
     public class EmailSendMethod : IEmailSendMethod
     {

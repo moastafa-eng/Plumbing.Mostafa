@@ -77,6 +77,7 @@ namespace Plumbing.Mostafa.PL.Controllers
                 return View();
             }
 
+
             return RedirectToAction("SignIn", "Authentication");
         }
 
@@ -148,11 +149,12 @@ namespace Plumbing.Mostafa.PL.Controllers
         [HttpPost]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordVM request)
         {
-            var validation = _forgotPasswordValidation.Validate(request);
+            // validation : contains any error if exist.
+            var validation = await _forgotPasswordValidation.ValidateAsync(request);
 
             if(!validation.IsValid)
             {
-                validation.AddToModelState(this.ModelState); // i don't understand this line.
+                validation.AddToModelState(this.ModelState);
                 return View();
             }
 
@@ -161,17 +163,21 @@ namespace Plumbing.Mostafa.PL.Controllers
             if(hasUser == null)
             {
                 ViewBag.Result = "UserDoen'tExist";
-                ModelState.AddModelErrorList(new List<string> { "User does not exist!" }); // I don't understand this line (Extension method (AddModelErroreList))
+                ModelState.AddModelErrorList(new List<string> { "User does not exist!" });
                 return View();
             }
 
-            string resetToken = await _userManager.GeneratePasswordResetTokenAsync(hasUser); // I don't understand this line of code.
+            // => Create -> token <- to reset password
+            // GeneratePasswordResetTokenAsync : return a unique token to specific user
+            string passwordResetToken = await _userManager.GeneratePasswordResetTokenAsync(hasUser); 
 
+            // => Url : Send this Url to -user email- to reset his password
+            // and this is the Segments of Url Rout to ResentPassword page and it's contains :
             var passwordResetLink = Url.Action("ResetPassword", "Authentication", new
             {
-                UserId = hasUser.Id,
-                Token = resetToken,
-                HttpContext.Request.Scheme
+                UserId = hasUser.Id, // UserId : To know which user that he want's to reset his password
+                Token = passwordResetToken, // Token : 123424
+                HttpContext.Request.Scheme // Protocol : Http/Https
             });
         }
     }
