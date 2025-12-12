@@ -8,6 +8,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ServiceLayer.Helpers.Identity.EmailHelper;
 using ServiceLayer.Helpers.Identity.ModelStateHelper;
 
 namespace Plumbing.Mostafa.PL.Controllers
@@ -27,20 +28,22 @@ namespace Plumbing.Mostafa.PL.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IMapper _iMapper;
+        private readonly IEmailSendMethod _emailSendMethod;
         private readonly IValidator<SignUpVM> _signUpValidator;
-        private readonly IValidator<SignInVM> _signInValidation;
-        private readonly IValidator<ForgotPasswordVM> _forgotPasswordValidation;
+        private readonly IValidator<SignInVM> _signInValidator;
+        private readonly IValidator<ForgotPasswordVM> _forgotPasswordValidator;
 
         public AuthenticationController(UserManager<AppUser> userManager, IValidator<SignUpVM> signUpValidator, 
-            IMapper iMapper, IValidator<SignInVM> signInValidation, SignInManager<AppUser> signInManager, 
-            IValidator<ForgotPasswordVM> forgotPasswordValidation)
+            IMapper iMapper, IValidator<SignInVM> signInValidator, SignInManager<AppUser> signInManager, 
+            IValidator<ForgotPasswordVM> forgotPasswordValidator, IEmailSendMethod emailSendMethod)
         {
             _userManager = userManager;
             _signUpValidator = signUpValidator;
             _iMapper = iMapper;
-            _signInValidation = signInValidation;
+            _signInValidator = signInValidator;
             _signInManager = signInManager;
-            _forgotPasswordValidation = forgotPasswordValidation;
+            _forgotPasswordValidator = forgotPasswordValidator;
+            _emailSendMethod = emailSendMethod;
         }
 
 
@@ -94,7 +97,7 @@ namespace Plumbing.Mostafa.PL.Controllers
             // The user access the page that he wants to Access it before log in
             returnUrl = returnUrl ?? Url.Action("Index", "Dashboard", new { area = "Admin" });
 
-            var Validation = await _signInValidation.ValidateAsync(request);
+            var Validation = await _signInValidator.ValidateAsync(request);
 
             if(!Validation.IsValid)
             {
@@ -150,7 +153,7 @@ namespace Plumbing.Mostafa.PL.Controllers
         public async Task<IActionResult> ForgotPassword(ForgotPasswordVM request)
         {
             // validation : contains any error if exist.
-            var validation = await _forgotPasswordValidation.ValidateAsync(request);
+            var validation = await _forgotPasswordValidator.ValidateAsync(request);
 
             if(!validation.IsValid)
             {
@@ -179,6 +182,10 @@ namespace Plumbing.Mostafa.PL.Controllers
                 Token = passwordResetToken, // Token : 123424
                 HttpContext.Request.Scheme // Protocol : Http/Https
             });
+
+            await _emailSendMethod.SendPasswordResetLinkWithEmail(passwordResetLink!, request.Email);
+
+            return RedirectToAction("SignIn", "Authentication");
         }
     }
 }

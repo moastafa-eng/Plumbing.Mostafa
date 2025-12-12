@@ -1,14 +1,17 @@
 ﻿using EntityLayer.Identity.Entities;
+using EntityLayer.Identity.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RepositoryLayer.Context;
+using ServiceLayer.Helpers.Identity.EmailHelper;
 
 namespace ServiceLayer.Extensions.Identity
 {
     public static class IdentityExtensions
     {
-        public static IServiceCollection LoadIdentityExtensions(this IServiceCollection services)
+        public static IServiceCollection LoadIdentityExtensions(this IServiceCollection services, IConfiguration config)
         {
             // Add Identity with configurations
             services.AddIdentity<AppUser, AppRole>(opt =>
@@ -52,6 +55,17 @@ namespace ServiceLayer.Extensions.Identity
                 // How long the cookie (login session) should remain valid
                 opt.ExpireTimeSpan = TimeSpan.FromMinutes(60);
             });
+
+            // Get Gmail Information from AppSettings file and sign this information to GmailInformationVM when we use IOption
+            services.Configure<GmailInformationVM>(config.GetSection("EmailSettings")); // GetSection : Get information from AppSetting file [EmailSettings Section]
+
+            services.Configure<DataProtectionTokenProviderOptions>(opt =>
+            {
+                opt.TokenLifespan = TimeSpan.FromMinutes(60); // **********(*(*)*)(*)(*()
+            });
+
+            // Add EmailSendMethod to DI container
+            services.AddScoped<IEmailSendMethod, EmailSendMethod>();
 
             return services;
         }
