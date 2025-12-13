@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ServiceLayer.Helpers.Identity.EmailHelper;
 using ServiceLayer.Helpers.Identity.ModelStateHelper;
+using ServiceLayer.Services.Identity.Abstract;
 
 namespace Plumbing.Mostafa.PL.Controllers
 {
@@ -28,7 +29,7 @@ namespace Plumbing.Mostafa.PL.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IMapper _iMapper;
-        private readonly IEmailSendMethod _emailSendMethod;
+        private readonly IAuthenticationCustomService _authenticationCustomService;
         private readonly IValidator<SignUpVM> _signUpValidator;
         private readonly IValidator<SignInVM> _signInValidator;
         private readonly IValidator<ForgotPasswordVM> _forgotPasswordValidator;
@@ -37,7 +38,7 @@ namespace Plumbing.Mostafa.PL.Controllers
         public AuthenticationController(UserManager<AppUser> userManager, IValidator<SignUpVM> signUpValidator, 
             IMapper iMapper, IValidator<SignInVM> signInValidator, SignInManager<AppUser> signInManager, 
             IValidator<ForgotPasswordVM> forgotPasswordValidator, IValidator<ResetPasswordVM> resetPasswordValidator, 
-            IEmailSendMethod emailSendMethod)
+            IAuthenticationCustomService authenticationCustomService)
         {
             _userManager = userManager;
             _signUpValidator = signUpValidator;
@@ -46,7 +47,7 @@ namespace Plumbing.Mostafa.PL.Controllers
             _signInManager = signInManager;
             _forgotPasswordValidator = forgotPasswordValidator;
             _resetPasswordValidator = resetPasswordValidator;
-            _emailSendMethod = emailSendMethod;
+            _authenticationCustomService = authenticationCustomService;
         }
 
 
@@ -173,19 +174,7 @@ namespace Plumbing.Mostafa.PL.Controllers
                 return View();
             }
 
-            // => Create -> token <- to reset password
-            // GeneratePasswordResetTokenAsync : return a unique token to specific user
-            string passwordResetToken = await _userManager.GeneratePasswordResetTokenAsync(hasUser); 
-
-            // => Url : Send this Url to -user email- to reset his password
-            // and this is the Segments of Url Rout to ResentPassword page and it's contains :
-            var passwordResetLink = Url.Action("ResetPassword", "Authentication", new
-            {
-                userId = hasUser.Id, // UserId : To know which user that he want's to reset his password
-                token = passwordResetToken,
-            }, HttpContext.Request.Scheme); // Protocol : Http/Https
-
-            await _emailSendMethod.SendPasswordResetLinkWithToken(passwordResetLink!, request.Email);
+            await _authenticationCustomService.CreateResetCredentialAndSend(hasUser, HttpContext, Url, request);
 
             return RedirectToAction("SignIn", "Authentication");
         }
@@ -244,6 +233,11 @@ namespace Plumbing.Mostafa.PL.Controllers
 
                 return RedirectToAction("ResetPassword", "Authentication", new { userId, token, errors });
             }
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
 
     }
