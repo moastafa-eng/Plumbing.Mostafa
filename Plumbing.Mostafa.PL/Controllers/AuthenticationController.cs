@@ -32,10 +32,12 @@ namespace Plumbing.Mostafa.PL.Controllers
         private readonly IValidator<SignUpVM> _signUpValidator;
         private readonly IValidator<SignInVM> _signInValidator;
         private readonly IValidator<ForgotPasswordVM> _forgotPasswordValidator;
+        private readonly IValidator<ResetPasswordVM> _resetPasswordValidator;
 
         public AuthenticationController(UserManager<AppUser> userManager, IValidator<SignUpVM> signUpValidator, 
             IMapper iMapper, IValidator<SignInVM> signInValidator, SignInManager<AppUser> signInManager, 
-            IValidator<ForgotPasswordVM> forgotPasswordValidator, IEmailSendMethod emailSendMethod)
+            IValidator<ForgotPasswordVM> forgotPasswordValidator, IValidator<ResetPasswordVM> resetPasswordValidator, 
+            IEmailSendMethod emailSendMethod)
         {
             _userManager = userManager;
             _signUpValidator = signUpValidator;
@@ -43,6 +45,7 @@ namespace Plumbing.Mostafa.PL.Controllers
             _signInValidator = signInValidator;
             _signInManager = signInManager;
             _forgotPasswordValidator = forgotPasswordValidator;
+            _resetPasswordValidator = resetPasswordValidator;
             _emailSendMethod = emailSendMethod;
         }
 
@@ -178,14 +181,70 @@ namespace Plumbing.Mostafa.PL.Controllers
             // and this is the Segments of Url Rout to ResentPassword page and it's contains :
             var passwordResetLink = Url.Action("ResetPassword", "Authentication", new
             {
-                UserId = hasUser.Id, // UserId : To know which user that he want's to reset his password
-                Token = passwordResetToken, // Token : 123424
-                HttpContext.Request.Scheme // Protocol : Http/Https
-            });
+                userId = hasUser.Id, // UserId : To know which user that he want's to reset his password
+                token = passwordResetToken,
+            }, HttpContext.Request.Scheme); // Protocol : Http/Https
 
-            await _emailSendMethod.SendPasswordResetLinkWithEmail(passwordResetLink!, request.Email);
+            await _emailSendMethod.SendPasswordResetLinkWithToken(passwordResetLink!, request.Email);
 
             return RedirectToAction("SignIn", "Authentication");
         }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string userId, string token, List<string> errors)
+        {
+            TempData["UserId"] = userId;
+            TempData["Token"] = token;
+
+            if(errors.Any())
+            {
+                ViewBag.Result = "Errors";
+                ModelState.AddModelErrorList(errors);
+            }
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordVM request)
+        {
+            var userId = TempData["UserId"];
+            var token = TempData["Token"];
+
+            if(userId == null || token == null)
+            {
+                return RedirectToAction("SignIn", "Authentication");
+            }
+
+            var validation = _resetPasswordValidator.Validate(request);
+
+            if(!validation.IsValid)
+            {
+                List<string> errors = validation.Errors.Select(x => x.ErrorMessage).ToList();
+
+                return RedirectToAction("ResetPassword", "Authentication", new {userId, token, errors});
+            }
+
+            var hasUser = await _userManager.FindByIdAsync(userId.ToString()!);
+
+            if(hasUser is null)
+            {
+                return RedirectToAction("SignIn", "Authentication");
+            }
+
+            var resetPasswordResult = await _userManager.ResetPasswordAsync(hasUser!, token.ToString()!, request.Password);
+
+            if(resetPasswordResult.Succeeded)
+            {
+                return RedirectToAction("SignIn", "Authentication");
+            }
+            else
+            {
+                List<string> errors = resetPasswordResult.Errors.Select(x => x.Description).ToList();
+
+                return RedirectToAction("ResetPassword", "Authentication", new { userId, token, errors });
+            }
+        }
+
     }
 }

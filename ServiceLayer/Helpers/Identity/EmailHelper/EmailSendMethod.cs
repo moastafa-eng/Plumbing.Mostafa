@@ -1,15 +1,23 @@
 ﻿using EntityLayer.Identity.Entities;
 using EntityLayer.Identity.ViewModels;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Options;
+using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
+using System.Runtime.Intrinsics.X86;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ServiceLayer.Helpers.Identity.EmailHelper
 {
     // I don't understand this topic.
     public interface IEmailSendMethod
     {
-        Task SendPasswordResetLinkWithEmail(string passwordResetLink, string toEmail);
+        Task SendPasswordResetLinkWithToken(string passwordResetLink, string toEmail);
     }
     public class EmailSendMethod : IEmailSendMethod
     {
@@ -21,10 +29,25 @@ namespace ServiceLayer.Helpers.Identity.EmailHelper
             _emailInfo = emailInfo.Value; // .Value : Get instance from GmailInformationVM
         }
 
-        public async Task SendPasswordResetLinkWithEmail(string passwordResetLink, string toEmail)
+        public async Task SendPasswordResetLinkWithToken(string passwordResetLink, string toEmail)
         {
-            // smtpClient Configurations
-            var smptClient = new SmtpClient();
+            #region Create an instance of the SmtpClient
+            //Create an SmtpClient object: Initializes the client for sending emails via SMTP.
+
+            //Set delivery method to network: Configures email to be sent over the network using the specified SMTP server.
+
+            //Set the SMTP server host: Specifies the server address(e.g., smtp.gmail.com) for sending emails.
+
+            //Set the SMTP port(587 for secure email submission): Uses port 587, which is standard for secure email communication.
+
+            //Disable default credentials: Disables system default login credentials and allows custom credentials.
+
+            //Set email account credentials(username and password): Defines the email account's username (email) and password for authentication.
+
+            //Enable SSL for secure communication: Ensures encryption of the connection to the SMTP server for data security.
+            #endregion
+
+            var smptClient = new SmtpClient(); // SMTP (Simple Mail Transfer Protocol) 
 
             smptClient.DeliveryMethod = SmtpDeliveryMethod.Network;
             smptClient.Host = _emailInfo.Host;
@@ -33,7 +56,7 @@ namespace ServiceLayer.Helpers.Identity.EmailHelper
             smptClient.Credentials = new NetworkCredential(_emailInfo.Email, _emailInfo.Password);
             smptClient.EnableSsl = true;
 
-            // mailMessage Configurations
+            // Create an instance of the mailMessage
             var mailMessage = new MailMessage();
 
             mailMessage.From = new MailAddress(_emailInfo.Email);
@@ -43,7 +66,7 @@ namespace ServiceLayer.Helpers.Identity.EmailHelper
                                 <p><a href='{passwordResetLink}'>Reset Password</a></p>";
             mailMessage.IsBodyHtml = true;
 
-            await smptClient.SendMailAsync(mailMessage);
+            await smptClient.SendMailAsync(mailMessage); // send mail with token
         }
     }
 }

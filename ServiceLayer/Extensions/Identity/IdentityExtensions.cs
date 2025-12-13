@@ -21,47 +21,35 @@ namespace ServiceLayer.Extensions.Identity
                 opt.Password.RequiredUniqueChars = 2;
                 opt.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromSeconds(60);
                 opt.Lockout.MaxFailedAccessAttempts = 3;
-            })
-            // Adds RoleManager<AppRole> to the DI container (optional because AddIdentity already adds it)
-            .AddRoleManager<RoleManager<AppRole>>()
-
-            // Tells Identity to use AppDbContext for storing users, roles, and identity tables
-            .AddEntityFrameworkStores<AppDbContext>()
-
-            // Adds default token providers (for password reset, email confirmation, 2FA, etc.)
-            .AddDefaultTokenProviders();
+            }) 
+            .AddRoleManager<RoleManager<AppRole>>() // Adds RoleManager<AppRole> to the DI container (optional because AddIdentity already adds it)
+            .AddEntityFrameworkStores<AppDbContext>() // Tells Identity to use AppDbContext for storing users, roles, and identity tables    
+            .AddDefaultTokenProviders(); // Adds default token providers (for password reset, email confirmation, 2FA, etc.)
 
             // Configure the authentication cookie used by ASP.NET Identity
             services.ConfigureApplicationCookie(opt =>
             {
-                // Create a new cookie object
-                var newCookie = new CookieBuilder();
+                var newCookie = new CookieBuilder(); // Create a new cookie object
 
-                // Set the cookie name (this will appear in the browser)
-                newCookie.Name = "PlumbingCompany";
-
-                // Path to redirect the user when trying to access something that requires login
-                opt.LoginPath = new PathString("/Authentication/SignIn");
-
-                // Path to redirect the user when they log out
-                opt.LogoutPath = new PathString("/Authentication/SignOut");
-
-                // Path to redirect the user if they try to access something without permission
-                opt.AccessDeniedPath = new PathString ("/Authentication/AccessDenied");
+                newCookie.Name = "PlumbingCompany"; // Set the cookie name (this will appear in the browser)
+                opt.LoginPath = new PathString("/Authentication/SignIn"); // Path to redirect the user when trying to access something that requires login   
+                opt.LogoutPath = new PathString("/Authentication/SignOut"); // Path to redirect the user when they log out
+                opt.AccessDeniedPath = new PathString ("/Authentication/AccessDenied"); // Path to redirect the user if they try to access something without permission
 
                 // Assign the custom cookie configuration
                 opt.Cookie = newCookie;
 
-                // How long the cookie (login session) should remain valid
-                opt.ExpireTimeSpan = TimeSpan.FromMinutes(60);
+                
+                opt.ExpireTimeSpan = TimeSpan.FromMinutes(60); // How long the cookie (login session) should remain valid
             });
 
             // Get Gmail Information from AppSettings file and sign this information to GmailInformationVM when we use IOption
             services.Configure<GmailInformationVM>(config.GetSection("EmailSettings")); // GetSection : Get information from AppSetting file [EmailSettings Section]
 
+            // Life time of token
             services.Configure<DataProtectionTokenProviderOptions>(opt =>
             {
-                opt.TokenLifespan = TimeSpan.FromMinutes(60); // **********(*(*)*)(*)(*()
+                opt.TokenLifespan = TimeSpan.FromMinutes(60); 
             });
 
             // Add EmailSendMethod to DI container
