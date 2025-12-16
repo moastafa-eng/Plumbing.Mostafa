@@ -50,7 +50,7 @@ namespace Plumbing.Mostafa.PL.Areas.User.Controllers
             if(!validation.IsValid)
             {
                 validation.AddToModelState(this.ModelState);
-                return View();
+                return View(request);
             }
 
             var checkPassword = await _usermanager.CheckPasswordAsync(user!, request.Password);
@@ -92,8 +92,8 @@ namespace Plumbing.Mostafa.PL.Areas.User.Controllers
             }
 
             var updateUserResult = await _usermanager.UpdateAsync(_mapper.Map(request, user));
-
-            if(updateUserResult.Succeeded)
+            
+            if(!updateUserResult.Succeeded)
             {
                 if(request.Photo is not null)
                 {
@@ -115,6 +115,7 @@ namespace Plumbing.Mostafa.PL.Areas.User.Controllers
                 // Image delete
             }
 
+            // this extra section must be above of update user section 
             if(request.NewPassword is not null)
             {
                 await _usermanager.ChangePasswordAsync(user!, request.NewPassword, request.Password);
