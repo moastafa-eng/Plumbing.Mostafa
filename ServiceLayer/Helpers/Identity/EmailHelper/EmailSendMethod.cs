@@ -1,16 +1,7 @@
-﻿using EntityLayer.Identity.Entities;
-using EntityLayer.Identity.ViewModels;
-using Microsoft.AspNetCore.DataProtection;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.HttpOverrides;
+﻿using EntityLayer.Identity.ViewModels;
 using Microsoft.Extensions.Options;
-using Microsoft.Identity.Client.Platforms.Features.DesktopOs.Kerberos;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Mail;
-using System.Runtime.Intrinsics.X86;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ServiceLayer.Helpers.Identity.EmailHelper
 {
