@@ -5,6 +5,7 @@ using ServiceLayer.FluentValidation.WebApplication.AboutValidation;
 using System.Reflection;
 using ServiceLayer.Extensions.Identity;
 using Microsoft.Extensions.Configuration;
+using ServiceLayer.Helpers.Generic.Image;
 
 namespace ServiceLayer.Extensions
 {
@@ -42,6 +43,7 @@ namespace ServiceLayer.Extensions
 
             // to find the validator in assembly file
             services.AddValidatorsFromAssemblyContaining<AboutAddValidation>();
+            services.AddScoped<IImageHelper, ImageHelper>();
 
             return services;
         }

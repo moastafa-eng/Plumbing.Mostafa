@@ -5,7 +5,6 @@ using System.Net.Mail;
 
 namespace ServiceLayer.Helpers.Identity.EmailHelper
 {
-    // I don't understand this topic.
     public interface IEmailSendMethod
     {
         Task SendPasswordResetLinkWithToken(string passwordResetLink, string toEmail);
