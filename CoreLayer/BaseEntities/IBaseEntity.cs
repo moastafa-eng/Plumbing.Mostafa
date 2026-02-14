@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CoreLayer.BaseEntities
+﻿namespace CoreLayer.BaseEntities
 {
     // Why we created this interface?
+    // => ensure all classes that implement this interface to 
     public interface IBaseEntity
     {
     }

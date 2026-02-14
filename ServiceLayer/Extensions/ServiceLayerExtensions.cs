@@ -15,7 +15,7 @@ namespace ServiceLayer.Extensions
         {
             services.LoadIdentityExtensions(config);
 
-            // Find All Configurations in Assembly file in Service layer.
+            // Find all profiles in Current DLL and register the configurations in IMapper.
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
             // Get all non-abstract classes that end with "Service from Currently Assembly.

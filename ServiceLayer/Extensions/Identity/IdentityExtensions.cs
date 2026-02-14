@@ -26,6 +26,14 @@ namespace ServiceLayer.Extensions.Identity
             .AddEntityFrameworkStores<AppDbContext>() // Tells Identity to use AppDbContext for storing users, roles, and identity tables    
             .AddDefaultTokenProviders(); // Adds default token providers (for password reset, email confirmation, 2FA, etc.)
 
+
+            // Life time of token
+            services.Configure<DataProtectionTokenProviderOptions>(opt =>
+            {
+                opt.TokenLifespan = TimeSpan.FromMinutes(60);
+            });
+
+
             // Configure the authentication cookie used by ASP.NET Identity
             services.ConfigureApplicationCookie(opt =>
             {
@@ -45,12 +53,6 @@ namespace ServiceLayer.Extensions.Identity
 
             // Get Gmail Information from AppSettings file and sign this information to GmailInformationVM when we use IOption
             services.Configure<GmailInformationVM>(config.GetSection("EmailSettings")); // GetSection : Get information from AppSetting file [EmailSettings Section]
-
-            // Life time of token
-            services.Configure<DataProtectionTokenProviderOptions>(opt =>
-            {
-                opt.TokenLifespan = TimeSpan.FromMinutes(60); 
-            });
 
             // Add EmailSendMethod to DI container
             services.AddScoped<IEmailSendMethod, EmailSendMethod>();

@@ -124,6 +124,9 @@ namespace Plumbing.Mostafa.PL.Areas.User.Controllers
                 await _signInManager.SignInAsync(user, false);
             }
 
+
+            ViewBag.UserName = user.UserName;
+
             return View();
         }
     }

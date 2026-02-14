@@ -16,6 +16,8 @@ namespace EntityLayer.WebApplication.ViewModels.AboutViewModels
         public string FileName { get; set; } = null!;
 
 
+
+        // Temporary holder for the uploaded image (not stored in the database)
         public IFormFile Photo { get; set; } = null!;
 
 

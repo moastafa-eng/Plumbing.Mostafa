@@ -6,6 +6,8 @@ using System.Reflection;
 
 namespace RepositoryLayer.Context
 {
+    // IdentityDbContext : it contains all class for AppUser & AppRole and it takes 
+    // type of primary key to Register them in data base.
     public class AppDbContext : IdentityDbContext<AppUser, AppRole, string>
     {
         #region Constructors
@@ -41,6 +43,12 @@ namespace RepositoryLayer.Context
             #endregion
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
+
+            #region OnModelCreating
+            // Called by EF Core when building the database model.
+            // Used to configure entity mappings, relationships, and apply all Fluent API configurations.
+            // base.OnModelCreating is required to keep Identity tables and relationships working correctly. 
+            #endregion
             base.OnModelCreating(modelBuilder);
         }
     }

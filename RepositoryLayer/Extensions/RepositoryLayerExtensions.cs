@@ -22,18 +22,17 @@ namespace RepositoryLayer.Extensions
         /// - Returns IServiceCollection to enable method chaining (e.g., adding more services after this call).
         /// 
         /// Purpose:
-        /// Registers the AppDbContext and any repository-related services into the DI container.
+        /// Registers the AppDbContext,any repository-related services or any services into the DI container.
         /// </summary>
         public static IServiceCollection LoadRepositoryLayerExtensions(this IServiceCollection services, IConfiguration config)
         {
             services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(config.GetConnectionString("SqlConnection")));
             services.AddScoped(typeof(IGenericRepositories<>), typeof(GenericRepositories<>)); // Open generic type
 
-            // we don't use type of here because IUnitOfWork is a static interface and class UnitOfWork is static
+            // we don't use type of here because IUnitOfWork is a static interface and class UnitOfWork is a static class
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
-
 
         }
     }

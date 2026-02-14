@@ -22,7 +22,7 @@ namespace ServiceLayer.Helpers.Generic.Image
         public ImageHelper(IHostEnvironment hostEnvironment)
         {
             _hostEnvironment = hostEnvironment;
-            // ContantRootBath : contain the Location for the App + wwwroot that contains the static files
+            // wwwRoot : contains the Location for the App + wwwroot that contains the static files
             wwwRoot = _hostEnvironment.ContentRootPath + "/wwwroot/";
         }
 
@@ -52,14 +52,14 @@ namespace ServiceLayer.Helpers.Generic.Image
             }
 
             // Creating Unique image By add Microsecond at end of it
-            var newFileName = folderName + "_" + DateTime.Now.Microsecond.ToString() + fileExtension;
+            var newFileName = folderName + "_" + DateTime.Now.Microsecond.ToString() + fileExtension; // user_12.0.0.0.jpeg // user_12.12.14.42.jpeg
 
-            string path = Path.Combine($"{wwwRoot}/{imageFolder}/{folderName}", newFileName);
+            string path = Path.Combine($"{wwwRoot}/{imageFolder}/{folderName}", newFileName); // /wwwroot/imageFolder/user/user_12.0.0.0.jpeg
 
             // prepare the file that will be contains the image inside it
             // using : Disposing the FileStream object after finished
             await using var stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None,
-                imageSize, useAsync: false);
+                imageSize, useAsync: true);
 
             // copy the image from imageFile to the newFileName
             await imageFile.CopyToAsync(stream);
@@ -72,9 +72,9 @@ namespace ServiceLayer.Helpers.Generic.Image
         }
 
         // Delete image
-        public string DeleteImage(string imageName)
+        public string DeleteImage(string FileName)
         {
-            var fileToDelete = Path.Combine($"{wwwRoot}/{imageFolder}/{imageName}");
+            var fileToDelete = Path.Combine($"{wwwRoot}/{imageFolder}/{FileName}");
 
             if (File.Exists(fileToDelete))
             {
