@@ -1,6 +1,7 @@
 ﻿// Ignore Spelling: Mostafa
 
 using AutoMapper;
+using CoreLayer.Enumerators;
 using EntityLayer.Identity.Entities;
 using EntityLayer.Identity.ViewModels;
 using FluentValidation;
@@ -8,6 +9,7 @@ using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using ServiceLayer.Helpers.Generic.Image;
 using ServiceLayer.Helpers.Identity.ModelStateHelper;
 
 namespace Plumbing.Mostafa.PL.Areas.User.Controllers
@@ -20,14 +22,16 @@ namespace Plumbing.Mostafa.PL.Areas.User.Controllers
         private readonly IMapper _mapper;
         private readonly IValidator<UserEditVM> _userEditValidator;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly IImageHelper _imageHelper;
 
         public UserAuthenticationController(UserManager<AppUser> userManager, IMapper mapper,
-            IValidator<UserEditVM> userEditValidator, SignInManager<AppUser> signInManager)
+            IValidator<UserEditVM> userEditValidator, SignInManager<AppUser> signInManager, IImageHelper imageHelper)
         {
             _usermanager = userManager;
             _mapper = mapper;
             _userEditValidator = userEditValidator;
             _signInManager = signInManager;
+            _imageHelper = imageHelper;
         }
 
         [HttpGet]
@@ -81,6 +85,7 @@ namespace Plumbing.Mostafa.PL.Areas.User.Controllers
 
             if(request.Photo is not null)
             {
+                var image = await _imageHelper.ImageUpload(request.Photo, ImageType.identity, null);
                 request.FileName = DateTime.Now.ToString();
                 request.FileType = DateTime.Now.ToString();
             }
